@@ -8,8 +8,12 @@ ShopNow is a **Kubernetes learning project** built around a full-stack MERN e-co
 
 This project teaches **Kubernetes** from container basics to production-ready deployments with Dockerfiles, Kubernetes manifests, Helm, GitOps and CICD using Jenkins.
 
-
-
+## 🎯 Learning Objectives
+- Write Dockerfiles for containerising the application
+- Master Kubernetes fundamentals through hands-on practice
+- Understand and implement HELM Chart for application deployment on kubernetes
+- Implement GitOps workflows using ArgoCD
+- Implement CICD pipelines using Jenkins
 ---
 
 ## 📁 Project Structure
