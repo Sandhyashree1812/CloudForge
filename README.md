@@ -360,7 +360,7 @@ Project
 PROJECT TITLE
 ===============
 
-ShopNow: End-to-End DevOps Automation and Multi-Cloud Deployment Platform 
+Cloudforge — End-to-End DevOps Project
 
 
 Problem statement
@@ -424,3 +424,44 @@ shopNow/
 └── README.md
 
 --- 
+
+
+=================== 
+
+Notes:
+This structure preserves the folders described in the ShopNow document and adds dedicated Terraform, Ansible, monitoring and testing organization.
+
+The existing project already includes Kubernetes manifests, Helm charts, ArgoCD configuration, Jenkins files, prerequisite manifests, scripts, and documentation. Inspect those before creating replacements.
+
+==========================  
+
+2. The phases we’ll follow
+Phase	What we will accomplish
+1	Inspect Cloudforge, run the application, understand its components
+2	Dockerize the frontend, admin dashboard, and backend
+3	Set up GitHub and Jenkins CI
+4	Use Terraform to provision AWS infrastructure
+5	Use Ansible for server configuration
+6	Push images to ECR and deploy to EKS
+7	Add Helm and, if required, Argo CD
+8	Set up Prometheus, Grafana, and alerts
+9	Test the full pipeline, document results, and analyze cost
+10	Add Azure resources if the multi-cloud extension is required
+
+================== 
+
+
+4. Sprint 1 — Architecture design, Dockerization and Jenkins setup
+
+5. Sprint 1
+Foundation
+
+Objective: Prepare ShopNow for container-based deployment and establish Jenkins as the automation engine.
+
+Deliverables: Architecture diagram, working Docker images, ECR repositories, Jenkins server, and GitHub integration. 
+
+=================== 
+
+Step 1.1 — Inspect the application 
+
+Start in the ShopNow repository.
