@@ -382,7 +382,7 @@ Extension: Azure using Terraform and AKS if multi-cloud implementation is explic
 
 =========================================== 
 
----text
+--- text
 
 shopNow/
 ├── frontend/                         # React customer app
