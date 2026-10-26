@@ -348,5 +348,79 @@ kubectl logs backend-746cc99cd-cqrgf -n shopnow-demo --previous # If no details 
 
 ## K Mohan Krishna
 
----
+--- 
 
+================================= 
+
+Project
+
+1. Project definition
+
+
+PROJECT TITLE
+===============
+
+ShopNow: End-to-End DevOps Automation and Multi-Cloud Deployment Platform 
+
+
+Problem statement
+================= 
+
+Automate the testing, containerization, infrastructure provisioning, configuration, deployment, scaling, monitoring, and recovery of a full-stack e-commerce application using Infrastructure as Code and CI/CD practices.
+
+--------------------------------------------- 
+
+Primary deployment: AWS using Terraform, EC2, ECR, EKS, S3, Jenkins, Ansible, Kubernetes, Prometheus, and Grafana.
+
+-------------------------------------------- 
+
+Extension: Azure using Terraform and AKS if multi-cloud implementation is explicitly required.
+
+======================================= 
+
+2. Detailed end-to-end architecture
+
+=========================================== 
+
+---text
+
+shopNow/
+├── frontend/                         # React customer app
+├── admin/                            # React admin dashboard
+├── backend/                          # Express API
+├── docker-compose.yml                # Local development
+├── terraform/
+│   ├── bootstrap/                    # S3 backend bootstrap
+│   ├── modules/
+│   │   ├── network/                  # VPC and subnets
+│   │   └── eks/                      # EKS infrastructure
+│   └── environments/
+│       ├── dev/
+│       └── prod/
+├── ansible/
+│   ├── inventory/
+│   ├── playbooks/
+│   └── roles/
+├── jenkins/
+│   ├── Jenkinsfile.ci
+│   ├── Jenkinsfile.infrastructure
+│   └── Jenkinsfile.deploy
+├── kubernetes/
+│   ├── k8s-manifests/
+│   ├── helm/
+│   │   └── charts/
+│   ├── argocd/
+│   └── pre-req/
+├── monitoring/
+│   ├── prometheus/
+│   ├── grafana/
+│   └── alerts/
+├── scripts/
+│   ├── build-and-push.sh
+│   └── cleanup.sh
+├── tests/
+├── docs/
+├── .gitignore
+└── README.md
+
+--- 
