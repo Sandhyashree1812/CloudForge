@@ -1,14 +1,14 @@
 
-# 🛒 ShopNow E-Commerce - Kubernetes Learning Project
+# ðŸ›’ CloudForge E-Commerce - Kubernetes Learning Project
 
-ShopNow is a **Kubernetes learning project** built around a full-stack MERN e-commerce application:
+CloudForge is a **Kubernetes learning project** built around a full-stack MERN e-commerce application:
 - **Customer App** (React frontend)  
 - **Admin Dashboard** (React admin panel)  
 - **Backend API** (Express + MongoDB)  
 
 This project teaches **Kubernetes** from container basics to production-ready deployments with Dockerfiles, Kubernetes manifests, Helm, GitOps and CICD using Jenkins.
 
-## 🎯 Learning Objectives
+## ðŸŽ¯ Learning Objectives
 - Write Dockerfiles for containerising the application
 - Master Kubernetes fundamentals through hands-on practice
 - Understand and implement HELM Chart for application deployment on kubernetes
@@ -16,27 +16,27 @@ This project teaches **Kubernetes** from container basics to production-ready de
 - Implement CICD pipelines using Jenkins
 ---
 
-## 📁 Project Structure
+## ðŸ“ Project Structure
 
 ```
-shopNow/
-├── backend/               # Node.js API server
-├── frontend/              # React customer app
-├── admin/                 # React admin dashboard
-├── kubernetes
-│   ├── k8s-manifests/     # Raw Kubernetes YAML files
-│   ├── helm/              # Helm charts for package management
-│   │   └── charts/        # Individual charts
-│   ├── argocd/            # GitOps deployment configs
-│   └── pre-req/           # Cluster prerequisites
-├── jenkins/               # Pipeline definitions (CI & CD)       
-├── docs/                  # learning resources and guides
-└── scripts/               # Automation and utility scripts
+CloudForge/
+â”œâ”€â”€ backend/               # Node.js API server
+â”œâ”€â”€ frontend/              # React customer app
+â”œâ”€â”€ admin/                 # React admin dashboard
+â”œâ”€â”€ kubernetes
+â”‚   â”œâ”€â”€ k8s-manifests/     # Raw Kubernetes YAML files
+â”‚   â”œâ”€â”€ helm/              # Helm charts for package management
+â”‚   â”‚   â””â”€â”€ charts/        # Individual charts
+â”‚   â”œâ”€â”€ argocd/            # GitOps deployment configs
+â”‚   â””â”€â”€ pre-req/           # Cluster prerequisites
+â”œâ”€â”€ jenkins/               # Pipeline definitions (CI & CD)       
+â”œâ”€â”€ docs/                  # learning resources and guides
+â””â”€â”€ scripts/               # Automation and utility scripts
 ```
 
 ---
 
-## 🚀 Learning Journey
+## ðŸš€ Learning Journey
 
 ### Container & Kubernetes Basics
 1. **Start Here**: [docs/K8S-CONCEPTS.md](docs/K8S-CONCEPTS.md) - Core concepts explained
@@ -52,7 +52,7 @@ shopNow/
 
 ## Getting Started
 
-## 🛠 Prerequisites & Setup
+## ðŸ›  Prerequisites & Setup
 
 #### 1. Setup Tools**: [docs/TOOLS-SETUP-GUIDE.md](docs/TOOLS-SETUP-GUIDE.md)
 
@@ -74,9 +74,9 @@ aws sts get-caller-identity
 
 like:
 
-aws ecr create-repository --repository-name <your-username>-shopnow/frontend --region <region>
-aws ecr create-repository --repository-name <your-username>-shopnow/backend --region <region>
-aws ecr create-repository --repository-name <your-username>-shopnow/admin --region <region>
+aws ecr create-repository --repository-name cloudforge/frontend --region <region>
+aws ecr create-repository --repository-name cloudforge/backend --region <region>
+aws ecr create-repository --repository-name cloudforge/admin --region <region>
 
 # Get login token (run this command everytime as the docker credentials are persisted only on the terminal)
 aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
@@ -86,65 +86,65 @@ aws ecr get-login-password --region <region> | docker login --username AWS --pas
 #### 3. Update Configurations in below mentioned files
 
 
-## 🔧 Personalization Required
+## ðŸ”§ Personalization Required
 
 **For Multi-User Kubernetes Clusters**: To avoid conflicts when multiple learners use the same cluster, each user must personalize their deployment with unique identifiers.
 
 **IMPORTANT**: This project contains hardcoded references that you must update with your own values:
 
-3.1. Replace "aryan" with your username in these locations:
+3.1. Replace "cloudforge" with your username in these locations:
 
   **Ingress Paths** (in both Kubernetes manifests and Helm charts):
-   - `kubernetes/k8s-manifests/ingress/ingress-shopnow.yaml`
-     - Change `/aryan` to `/<your-username>`
-     - Change `/aryan-admin` to `/<your-username>-admin`
+   - `kubernetes/k8s-manifests/ingress/ingress-cloudforge.yaml`
+     - Change `/cloudforge` to `/<your-username>`
+     - Change `/cloudforge-admin` to `/<your-username>-admin`
    
    - `kubernetes/helm/charts/frontend/values.yaml`
-     - Change `path: /aryan` to `path: /<your-username>`
+     - Change `path: /cloudforge` to `path: /<your-username>`
    
    - `kubernetes/helm/charts/admin/values.yaml`
-     - Change `path: /aryan-admin` to `path: /<your-username>-admin`
+     - Change `path: /cloudforge-admin` to `path: /<your-username>-admin`
 
 
   **Nginx ConfigMaps**
-   - All references with 'aryan' to <your-username> in following files:
+   - All references with 'cloudforge' to <your-username> in following files:
    - `kubernetes/k8s-manifests/frontend/cm-nginx.yaml`   
    - `kubernetes/k8s-manifests/admin/cm-nginx.yaml`
 
 
   **Helm Chart Nginx Configurations**:
-   - All references with 'aryan' in the 'nginx.config' section to <your-username> in following files:
+   - All references with 'cloudforge' in the 'nginx.config' section to <your-username> in following files:
    - `kubernetes/helm/charts/frontend/values.yaml` 
    - `kubernetes/helm/charts/admin/values.yaml`
 
   **Dockerfiles** (Build Arguments):
    - `frontend/Dockerfile`
-     - Change `ARG USER_NAME=aryan` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=cloudforge` to `ARG USER_NAME=<your-username>`
    
    - `admin/Dockerfile`
-     - Change `ARG USER_NAME=aryan` to `ARG USER_NAME=<your-username>`
+     - Change `ARG USER_NAME=cloudforge` to `ARG USER_NAME=<your-username>`
 
   **Build Script** (optional):
    - `scripts/build-and-push.sh`
-     - Update the example usage comments that reference "aryan"
+     - Update the example usage comments that reference "cloudforge"
 
 3.2. **ECR Repository Names** - Update to your username:
    - All `kubernetes/k8s-manifests/*/deployment.yaml` files
    - All `kubernetes/helm/charts/*/values.yaml` files
    - All `jenkins\Jenkinsfile.*.*` files
-   - Change `shopnow/frontend` to `<your-username>-shopnow/frontend`
-   - Change `shopnow/backend` to `<your-username>-shopnow/backend`
-   - Change `shopnow/admin` to `<your-username>-shopnow/admin`
+   - Change `shopnow/frontend` to `cloudforge/frontend`
+   - Change `shopnow/backend` to `cloudforge/backend`
+   - Change `shopnow/admin` to `cloudforge/admin`
 
 3.3. **Update Namespace** on these locations:
   - `kubernetes/k8s-manifests/namespace/namespace.yaml` - Change namespace name
   - All files in `kubernetes/k8s-manifests/*/` - Update namespace references
   - `kubernetes/argocd/apps/*.yaml` - Update destination namespace
-  - All kubectl commands in this README - Replace `shopnow-demo` with your namespace
+  - All kubectl commands in this README - Replace `cloudforge-demo` with your namespace
 
 3.4. **Update ArgoCD Repository URL**:
   - In `kubernetes/argocd/umbrella-application.yaml` and all `kubernetes/argocd/apps/*.yaml` files:
-  - Change `repoURL: 'https://github.com/aryanm12/shopNow'` 
+  - Change `repoURL: 'https://github.com/Sandhyashree1812/CloudForge'` 
   - To `repoURL: 'https://github.com/<your-github-username>/<your-repo-name>'`
 
 
@@ -159,15 +159,15 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-Note: All the below mentioned kubectl commands assume that you are working with "shopnow-demo" namespace, update the namespace as per yours where ever you find "shopnow-demo".
+Note: All the below mentioned kubectl commands assume that you are working with "cloudforge-demo" namespace, update the namespace as per yours where ever you find "cloudforge-demo".
 
 #### 5. Docker Registry Secret (Only required for private ECR registry)
 **Note**: Skip this step if using public Docker Hub images or public ECR repositories.
 
 ```bash
 # Create registry secret for private ECR image pulls
-kubectl create ns shopnow-demo
-kubectl create secret docker-registry ecr-secret --docker-server=<account-id>.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1) --namespace=shopnow-demo
+kubectl create ns cloudforge-demo
+kubectl create secret docker-registry ecr-secret --docker-server=<account-id>.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1) --namespace=cloudforge-demo
 ```
 
 #### 6. Install Pre-requisites in the Kubernetes Environment (Has to be done once per Kubernetes Cluster)
@@ -192,7 +192,7 @@ kubectl top pods  # Should work after metrics server is running
 
 # First install the EBS CSI driver as an EKS Addon
 
--> In the EKS Console, open your cluster → go to Add-ons → click Get more add-ons → select Amazon EBS CSI driver → click Next.
+-> In the EKS Console, open your cluster â†’ go to Add-ons â†’ click Get more add-ons â†’ select Amazon EBS CSI driver â†’ click Next.
 -> On the configuration page, Under Pod identity association, choose Create a new IAM role, and the console will auto-attach the AmazonEBSCSIDriverPolicy.
 -> Confirm and click Create. The add-on installs, the IAM role is associated with the SA via Pod Identity, and the driver starts running.
 -> Verify under Add-ons tab that the EBS CSI driver is active and under Pod identity associations tab you see the SA <-> IAM role mapping.
@@ -207,15 +207,15 @@ kubectl get storageclass
 ```
 
 
-## ⚡ Build and Deploy the micro-services
+## âš¡ Build and Deploy the micro-services
 
 ### 1. Build the docker images and push it to the ECR registry created above
 
 ```bash
 scripts/build-and-push.sh <account-id>.dkr.ecr.<region>.amazonaws.com/<registry-name> <tag-name-number> <your-username> 
 
-# Example for user 'aryan' with tag 'latest' and ECR registry '975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow':
-./scripts/build-and-push.sh 975050024946.dkr.ecr.ap-southeast-1.amazonaws.com/shopnow latest aryan
+# Example for user 'cloudforge' with tag 'latest' and ECR registry '<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/cloudforge':
+./scripts/build-and-push.sh <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/cloudforge latest cloudforge
 
 
 ```
@@ -236,10 +236,10 @@ kubectl apply -f kubernetes/k8s-manifests/daemonsets-example/
 **Option B: Helm Charts**
 
 ```bash
-helm upgrade --install mongo kubernetes/helm/charts/mongo -n shopnow-demo --create-namespace
-helm upgrade --install backend kubernetes/helm/charts/backend -n shopnow-demo
-helm upgrade --install frontend kubernetes/helm/charts/frontend -n shopnow-demo
-helm upgrade --install admin kubernetes/helm/charts/admin -n shopnow-demo
+helm upgrade --install mongo kubernetes/helm/charts/mongo -n cloudforge-demo --create-namespace
+helm upgrade --install backend kubernetes/helm/charts/backend -n cloudforge-demo
+helm upgrade --install frontend kubernetes/helm/charts/frontend -n cloudforge-demo
+helm upgrade --install admin kubernetes/helm/charts/admin -n cloudforge-demo
 ```
 
 **Option C: ArgoCD GitOps**
@@ -249,7 +249,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # Create target namespace
-kubectl create namespace shopnow-demo
+kubectl create namespace cloudforge-demo
 
 # Deploy applications
 kubectl apply -f kubernetes/argocd/umbrella-application.yaml
@@ -264,18 +264,18 @@ kubectl get applications -n argocd
 ```bash
 
 # check the status of the mongo-0 pods 
-kubectl get pods -n shopnow-demo
+kubectl get pods -n cloudforge-demo
 
 # if mongo-0 pod is healthy, then run following command to create a user for the backend to connect
 # user credentials should be same as mentioned in the backend secrets-db.yaml file
 # First exex into the pods
-kubectl -n shopnow-demo exec -it mongo-0 -- mongosh
+kubectl -n cloudforge-demo exec -it mongo-0 -- mongosh
 
 # Run below commands
 use admin;
 db.createUser({
   user: 'shopuser',
-  pwd: 'ShopNowPass123',
+  pwd: 'CloudForgePass123',
   roles: [
     { role: 'readWrite', db: 'shopnow' },
     { role: 'dbAdmin', db: 'shopnow' }
@@ -285,56 +285,56 @@ db.createUser({
 exit
 
 # Restart backend deployment
-kubectl rollout restart deploy backend -n shopnow-demo
+kubectl rollout restart deploy backend -n cloudforge-demo
 ```
 
 ### 3. Check the resources deployed
 
 ```bash
 # Check Pods
-kubectl get pods -n shopnow-demo
+kubectl get pods -n cloudforge-demo
 
 # Check Deployment
-kubectl get deploy -n shopnow-demo
+kubectl get deploy -n cloudforge-demo
 
 # Check Services
-kubectl get svc -n shopnow-demo
+kubectl get svc -n cloudforge-demo
 
 # Check daemonsets
-kubectl get daemonsets -n shopnow-demo
+kubectl get daemonsets -n cloudforge-demo
 
 # Check statefulsets
-kubectl get statefulsets -n shopnow-demo
+kubectl get statefulsets -n cloudforge-demo
 
 # Check HPA
-kubectl get hpa -n shopnow-demo
+kubectl get hpa -n cloudforge-demo
 
 # Check all of the above at once
-kubectl get all -n shopnow-demo
+kubectl get all -n cloudforge-demo
 
 # Check configmaps
-kubectl get cm -n shopnow-demo
+kubectl get cm -n cloudforge-demo
 
 # Check secrets
-kubectl get secrets -n shopnow-demo
+kubectl get secrets -n cloudforge-demo
 
 # Check ingress
-kubectl get ing -n shopnow-demo
+kubectl get ing -n cloudforge-demo
 
 # Sequence to debug in case of any issue with the pods
-kubectl get pods -n shopnow-demo
-kubectl describe pod backend-746cc99cd-cqrgf -n shopnow-demo # Assuming that pod backend-746cc99cd-cqrgf has an error
-kubectl logs backend-746cc99cd-cqrgf -n shopnow-demo --previous # If no details are found in the above command or if details like liveness probe failed are coming
+kubectl get pods -n cloudforge-demo
+kubectl describe pod backend-746cc99cd-cqrgf -n cloudforge-demo # Assuming that pod backend-746cc99cd-cqrgf has an error
+kubectl logs backend-746cc99cd-cqrgf -n cloudforge-demo --previous # If no details are found in the above command or if details like liveness probe failed are coming
 
 ```
 
 
 ---
 
-## 🌐 Access the Apps
+## ðŸŒ Access the Apps
 
-* **Customer App** → [http://<load-balancer-ip-or-dns>/<your-username>](http://<load-balancer-ip-or-dns>/<your-username>)
-* **Admin Dashboard** → [http://<load-balancer-ip-or-dns>/<your-username>-admin](http://<load-balancer-ip-or-dns>/<your-username>-admin)
+* **Customer App** â†’ [http://<load-balancer-ip-or-dns>/<your-username>](http://<load-balancer-ip-or-dns>/<your-username>)
+* **Admin Dashboard** â†’ [http://<load-balancer-ip-or-dns>/<your-username>-admin](http://<load-balancer-ip-or-dns>/<your-username>-admin)
 
 ---
 
@@ -344,7 +344,7 @@ kubectl logs backend-746cc99cd-cqrgf -n shopnow-demo --previous # If no details 
 **Check the Troubleshooting Guide**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 ---
 
-## 👨‍💻 Author
+## ðŸ‘¨â€ðŸ’» Author
 
 ## K Mohan Krishna
 
@@ -360,7 +360,7 @@ Project
 PROJECT TITLE
 ===============
 
-Cloudforge — End-to-End DevOps Project
+Cloudforge â€” End-to-End DevOps Project
 
 
 Problem statement
@@ -384,44 +384,44 @@ Extension: Azure using Terraform and AKS if multi-cloud implementation is explic
 
 --- text
 
-shopNow/
-├── frontend/                         # React customer app
-├── admin/                            # React admin dashboard
-├── backend/                          # Express API
-├── docker-compose.yml                # Local development
-├── terraform/
-│   ├── bootstrap/                    # S3 backend bootstrap
-│   ├── modules/
-│   │   ├── network/                  # VPC and subnets
-│   │   └── eks/                      # EKS infrastructure
-│   └── environments/
-│       ├── dev/
-│       └── prod/
-├── ansible/
-│   ├── inventory/
-│   ├── playbooks/
-│   └── roles/
-├── jenkins/
-│   ├── Jenkinsfile.ci
-│   ├── Jenkinsfile.infrastructure
-│   └── Jenkinsfile.deploy
-├── kubernetes/
-│   ├── k8s-manifests/
-│   ├── helm/
-│   │   └── charts/
-│   ├── argocd/
-│   └── pre-req/
-├── monitoring/
-│   ├── prometheus/
-│   ├── grafana/
-│   └── alerts/
-├── scripts/
-│   ├── build-and-push.sh
-│   └── cleanup.sh
-├── tests/
-├── docs/
-├── .gitignore
-└── README.md
+CloudForge/
+â”œâ”€â”€ frontend/                         # React customer app
+â”œâ”€â”€ admin/                            # React admin dashboard
+â”œâ”€â”€ backend/                          # Express API
+â”œâ”€â”€ docker-compose.yml                # Local development
+â”œâ”€â”€ terraform/
+â”‚   â”œâ”€â”€ bootstrap/                    # S3 backend bootstrap
+â”‚   â”œâ”€â”€ modules/
+â”‚   â”‚   â”œâ”€â”€ network/                  # VPC and subnets
+â”‚   â”‚   â””â”€â”€ eks/                      # EKS infrastructure
+â”‚   â””â”€â”€ environments/
+â”‚       â”œâ”€â”€ dev/
+â”‚       â””â”€â”€ prod/
+â”œâ”€â”€ ansible/
+â”‚   â”œâ”€â”€ inventory/
+â”‚   â”œâ”€â”€ playbooks/
+â”‚   â””â”€â”€ roles/
+â”œâ”€â”€ jenkins/
+â”‚   â”œâ”€â”€ Jenkinsfile.ci
+â”‚   â”œâ”€â”€ Jenkinsfile.infrastructure
+â”‚   â””â”€â”€ Jenkinsfile.deploy
+â”œâ”€â”€ kubernetes/
+â”‚   â”œâ”€â”€ k8s-manifests/
+â”‚   â”œâ”€â”€ helm/
+â”‚   â”‚   â””â”€â”€ charts/
+â”‚   â”œâ”€â”€ argocd/
+â”‚   â””â”€â”€ pre-req/
+â”œâ”€â”€ monitoring/
+â”‚   â”œâ”€â”€ prometheus/
+â”‚   â”œâ”€â”€ grafana/
+â”‚   â””â”€â”€ alerts/
+â”œâ”€â”€ scripts/
+â”‚   â”œâ”€â”€ build-and-push.sh
+â”‚   â””â”€â”€ cleanup.sh
+â”œâ”€â”€ tests/
+â”œâ”€â”€ docs/
+â”œâ”€â”€ .gitignore
+â””â”€â”€ README.md
 
 --- 
 
@@ -429,13 +429,13 @@ shopNow/
 =================== 
 
 Notes:
-This structure preserves the folders described in the ShopNow document and adds dedicated Terraform, Ansible, monitoring and testing organization.
+This structure preserves the folders described in the CloudForge document and adds dedicated Terraform, Ansible, monitoring and testing organization.
 
-The existing project already includes Kubernetes manifests, Helm charts, ArgoCD configuration, Jenkins files, prerequisite manifests, scripts, and documentation. Inspect those before creating replacements.
+The current repository contains the MERN application and documentation. The Terraform, Ansible, Jenkins, Kubernetes, Helm, ArgoCD, monitoring, and automation directories shown above are planned deliverables and will be created during the upcoming sprints.
 
 ==========================  
 
-2. The phases we’ll follow
+2. The phases weâ€™ll follow
 Phase	What we will accomplish
 1	Inspect Cloudforge, run the application, understand its components
 2	Dockerize the frontend, admin dashboard, and backend
@@ -451,17 +451,17 @@ Phase	What we will accomplish
 ================== 
 
 
-4. Sprint 1 — Architecture design, Dockerization and Jenkins setup
+4. Sprint 1 â€” Architecture design, Dockerization and Jenkins setup
 
 5. Sprint 1
 Foundation
 
-Objective: Prepare ShopNow for container-based deployment and establish Jenkins as the automation engine.
+Objective: Prepare CloudForge for container-based deployment and establish Jenkins as the automation engine.
 
 Deliverables: Architecture diagram, working Docker images, ECR repositories, Jenkins server, and GitHub integration. 
 
 =================== 
 
-Step 1.1 — Inspect the application 
+Step 1.1 â€” Inspect the application 
 
-Start in the ShopNow repository.
+Start in the CloudForge repository.

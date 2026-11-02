@@ -1,4 +1,4 @@
-# shopNow backend (Node.js API)
+# CloudForge backend (Node.js API)
 
 FROM node:18-alpine
 

@@ -8,13 +8,13 @@ Common issues and solutions when working with the any Kubernetes project (Specif
 ```bash
 
 # Describe resource
-kubectl describe pod <pod-name> -n shopnow-demo
+kubectl describe pod <pod-name> -n cloudforge-demo
 
 # Check pod logs
-kubectl logs <pod-name> -n shopnow-demo --previous
+kubectl logs <pod-name> -n cloudforge-demo --previous
 
 # Debug with interactive shell
-kubectl exec -it <pod-name> -n shopnow-demo -- /bin/sh
+kubectl exec -it <pod-name> -n cloudforge-demo -- /bin/sh
 ```
 
 ### Networking Issues
@@ -22,13 +22,13 @@ kubectl exec -it <pod-name> -n shopnow-demo -- /bin/sh
 #### Problem: Service Not Accessible
 ```bash
 # Verify service endpoints
-kubectl get endpoints -n shopnow-demo
+kubectl get endpoints -n cloudforge-demo
 
 # Test service connectivity
-kubectl run debug --image=busybox -it --rm -- nslookup backend.shopnow-demo
+kubectl run debug --image=busybox -it --rm -- nslookup backend.cloudforge-demo
 
 # Check service configuration
-kubectl describe service backend -n shopnow-demo
+kubectl describe service backend -n cloudforge-demo
 ```
 
 #### Problem: Ingress Not Working
@@ -37,7 +37,7 @@ kubectl describe service backend -n shopnow-demo
 kubectl get pods -n ingress-nginx
 
 # Verify ingress resource
-kubectl describe ingress shopnow-ingress -n shopnow-demo
+kubectl describe ingress cloudforge-ingress -n cloudforge-demo
 
 # Check ingress controller logs
 kubectl logs -n ingress-nginx deployment/ingress-nginx-controller
@@ -51,7 +51,7 @@ kubectl logs -n ingress-nginx deployment/ingress-nginx-controller
 kubectl get storageclass
 
 # Verify PVC status
-kubectl describe pvc mongo-data-mongo-0 -n shopnow-demo
+kubectl describe pvc mongo-data-mongo-0 -n cloudforge-demo
 
 # Check node storage capacity
 kubectl describe nodes
@@ -62,13 +62,13 @@ kubectl describe nodes
 #### Problem: ConfigMap/Secret Not Loading
 ```bash
 # Verify ConfigMap exists
-kubectl get configmap -n shopnow-demo
+kubectl get configmap -n cloudforge-demo
 
 # Check secret data
-kubectl get secret db-secret -n shopnow-demo -o yaml
+kubectl get secret db-secret -n cloudforge-demo -o yaml
 
 # Validate environment variables in pod
-kubectl exec <pod-name> -n shopnow-demo -- env | grep MONGODB
+kubectl exec <pod-name> -n cloudforge-demo -- env | grep MONGODB
 ```
 
 ### Scaling Issues
@@ -77,13 +77,13 @@ kubectl exec <pod-name> -n shopnow-demo -- env | grep MONGODB
 ```bash
 # Check metrics server
 kubectl top nodes
-kubectl top pods -n shopnow-demo
+kubectl top pods -n cloudforge-demo
 
 # Verify HPA status
-kubectl describe hpa backend-hpa -n shopnow-demo
+kubectl describe hpa backend-hpa -n cloudforge-demo
 
 # Check resource requests/limits
-kubectl describe deployment backend -n shopnow-demo
+kubectl describe deployment backend -n cloudforge-demo
 ```
 
 ## 🔍 Debugging Commands
@@ -91,24 +91,24 @@ kubectl describe deployment backend -n shopnow-demo
 ### Essential Debugging Toolkit
 ```bash
 # Pod inspection
-kubectl get pods -n shopnow-demo -o wide
-kubectl describe pod <pod-name> -n shopnow-demo
-kubectl logs <pod-name> -n shopnow-demo --follow
+kubectl get pods -n cloudforge-demo -o wide
+kubectl describe pod <pod-name> -n cloudforge-demo
+kubectl logs <pod-name> -n cloudforge-demo --follow
 
 # Service debugging
-kubectl get svc -n shopnow-demo
-kubectl get endpoints -n shopnow-demo
+kubectl get svc -n cloudforge-demo
+kubectl get endpoints -n cloudforge-demo
 
 # Network debugging
-kubectl exec -it <pod-name> -n shopnow-demo -- nslookup kubernetes.default
-kubectl exec -it <pod-name> -n shopnow-demo -- wget -qO- http://backend:5000/health
+kubectl exec -it <pod-name> -n cloudforge-demo -- nslookup kubernetes.default
+kubectl exec -it <pod-name> -n cloudforge-demo -- wget -qO- http://backend:5000/health
 
 # Resource monitoring
-kubectl top pods -n shopnow-demo
+kubectl top pods -n cloudforge-demo
 kubectl describe node <node-name>
 
 # Event monitoring
-kubectl get events -n shopnow-demo --sort-by='.lastTimestamp'
+kubectl get events -n cloudforge-demo --sort-by='.lastTimestamp'
 ```
 
 ## 🛠 Helm Troubleshooting
@@ -116,16 +116,16 @@ kubectl get events -n shopnow-demo --sort-by='.lastTimestamp'
 ### Common Helm Issues
 ```bash
 # Check Helm release status
-helm status shopnow-backend -n shopnow-demo
+helm status cloudforge-backend -n cloudforge-demo
 
 # Debug template rendering
-helm template shopnow-backend kubernetes/helm/charts/backend --debug
+helm template cloudforge-backend kubernetes/helm/charts/backend --debug
 
 # Rollback failed deployment
-helm rollback shopnow-backend 1 -n shopnow-demo
+helm rollback cloudforge-backend 1 -n cloudforge-demo
 
 # Check Helm history
-helm history shopnow-backend -n shopnow-demo
+helm history cloudforge-backend -n cloudforge-demo
 ```
 
 ## 🔄 ArgoCD Troubleshooting
@@ -136,10 +136,10 @@ helm history shopnow-backend -n shopnow-demo
 kubectl get applications -n argocd
 
 # View application details
-kubectl describe application shopnow-umbrella -n argocd
+kubectl describe application cloudforge-umbrella -n argocd
 
 # Force sync
-argocd app sync shopnow-umbrella
+argocd app sync cloudforge-umbrella
 
 # Check ArgoCD server logs
 kubectl logs -n argocd deployment/argocd-server
@@ -153,7 +153,7 @@ kubectl logs -n argocd deployment/argocd-server
 kubectl top nodes
 
 # Pod resource usage
-kubectl top pods -n shopnow-demo
+kubectl top pods -n cloudforge-demo
 
 # Detailed resource metrics
 kubectl describe node <node-name> | grep -A 5 "Allocated resources"
@@ -168,8 +168,8 @@ kubectl get nodes
 kubectl get pods --all-namespaces
 
 # Restart failed deployments
-kubectl rollout restart deployment/backend -n shopnow-demo
+kubectl rollout restart deployment/backend -n cloudforge-demo
 
 # Emergency pod deletion
-kubectl delete pod <pod-name> -n shopnow-demo --force --grace-period=0
+kubectl delete pod <pod-name> -n cloudforge-demo --force --grace-period=0
 ```

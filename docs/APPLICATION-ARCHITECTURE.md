@@ -1,10 +1,10 @@
-# 🏗️ ShopNow Application Architecture
+# 🏗️ CloudForge Application Architecture
 
-Comprehensive guide to understanding the ShopNow e-commerce application architecture, deployment patterns, and technology stack.
+Comprehensive guide to understanding the CloudForge e-commerce application architecture, deployment patterns, and technology stack.
 
 ## 🎯 Overview
 
-ShopNow is a **full-stack MERN application** designed to demonstrate real-world Kubernetes deployment patterns. The architecture follows modern microservices principles with containerized components.
+CloudForge is a **full-stack MERN application** designed to demonstrate real-world Kubernetes deployment patterns. The architecture follows modern microservices principles with containerized components.
 
 ## 📊 High-Level Architecture
 
@@ -284,7 +284,7 @@ RUN npm ci --no-audit --prefer-offline
 COPY . .
 RUN npm run build  # Creates /app/build with static files
 
-# Stage 2: Runtime Stage  
+# Stage 2: Runtime Stage
 FROM nginx:alpine
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
@@ -319,7 +319,7 @@ CMD ["node", "server.js"]
 ### Service Communication
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                 Kubernetes Namespace: shopnow-demo         │
+│                 Kubernetes Namespace: cloudforge-demo         │
 │                                                             │
 │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
 │  │  frontend   │    │    admin    │    │   backend   │     │
@@ -364,15 +364,15 @@ Resources:
   frontend:
     requests: { cpu: 50m, memory: 128Mi }
     limits:   { cpu: 200m, memory: 256Mi }
-  
+
   admin:
     requests: { cpu: 50m, memory: 128Mi }
     limits:   { cpu: 200m, memory: 256Mi }
-  
+
   backend:
     requests: { cpu: 100m, memory: 200Mi }
     limits:   { cpu: 500m, memory: 512Mi }
-  
+
   mongodb:
     requests: { cpu: 250m, memory: 512Mi }
     limits:   { cpu: 1000m, memory: 2Gi }
@@ -381,7 +381,7 @@ Resources:
 ## 🔐 Security Architecture
 
 ### Network Security
-- **Namespace Isolation**: All components in `shopnow-demo` namespace
+- **Namespace Isolation**: All components in `cloudforge-demo` namespace
 - **Service-to-Service**: Internal ClusterIP communication
 - **API Gateway Pattern**: nginx proxies external requests
 - **No Direct Database Access**: Only backend can access MongoDB

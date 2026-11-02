@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ShoppingCart, User, Plus, Minus, Star, Filter, Menu, X, Download } from 'lucide-react';
 
-const ShopNowApp = () => {
+const CloudForgeApp = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,7 +29,7 @@ const ShopNowApp = () => {
       setProducts(data.products || []);
     } catch (error) {
       console.error('Error fetching products:', error);
-    
+
     }
   };
 
@@ -111,8 +111,8 @@ const ShopNowApp = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Invoice saved to MongoDB:', data);
-        return { 
-          success: true, 
+        return {
+          success: true,
           invoice: data.invoice,
           invoiceNumber: data.invoice.invoiceNumber,
           token: data.invoice.token
@@ -124,8 +124,8 @@ const ShopNowApp = () => {
     } catch (error) {
       console.error('Error saving invoice:', error);
       // Fallback to local generation for demo
-      return { 
-        success: true, 
+      return {
+        success: true,
         invoiceNumber: generateInvoiceNumber(),
         token: generateToken().toString(),
         isDemo: true
@@ -136,13 +136,13 @@ const ShopNowApp = () => {
   // Generate and download invoice PDF
   const generateInvoicePDF = (invoiceData) => {
     const { invoiceNumber, token, customerDetails, items, total, date } = invoiceData;
-    
+
     // Create HTML content for the invoice
     const invoiceHTML = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>ShopNow Invoice</title>
+        <title>CloudForge Invoice</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 20px; }
           .header { text-align: center; margin-bottom: 30px; }
@@ -159,30 +159,30 @@ const ShopNowApp = () => {
       </head>
       <body>
         <div class="header">
-          <div class="company-name">ShopNow</div>
+          <div class="company-name">CloudForge</div>
           <p>Your Trusted Shopping Partner</p>
         </div>
-        
+
         <div class="invoice-details">
           <h3>INVOICE</h3>
           <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
           <p><strong>Date:</strong> ${date}</p>
           <p><strong>Payment Method:</strong> Cash on Delivery</p>
         </div>
-        
+
         <div class="customer-info">
           <h3>Customer Details</h3>
           <p><strong>Name:</strong> ${customerDetails.name}</p>
           <p><strong>Phone:</strong> ${customerDetails.phone}</p>
           <p><strong>Email:</strong> ${customerDetails.email || 'Not provided'}</p>
         </div>
-        
+
         <div class="token">
           <h3>Collection Token</h3>
           <div style="font-size: 24px; font-weight: bold; color: #dc2626;">${token}</div>
-          <p>Please bring this token to collect your package from ShopNow counter</p>
+          <p>Please bring this token to collect your package from CloudForge counter</p>
         </div>
-        
+
         <table class="items-table">
           <thead>
             <tr>
@@ -203,15 +203,15 @@ const ShopNowApp = () => {
             `).join('')}
           </tbody>
         </table>
-        
+
         <div class="total">
           <p>Total Amount: $${total}</p>
         </div>
-        
+
         <div class="footer">
-          <p>Thank you for shopping with ShopNow!</p>
+          <p>Thank you for shopping with CloudForge!</p>
           <p>Please present this invoice and token at our counter to collect your items.</p>
-          <p>For support, contact us at support@shopnow.com</p>
+          <p>For support, contact us at support@cloudforge.example</p>
         </div>
       </body>
       </html>
@@ -222,7 +222,7 @@ const ShopNowApp = () => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `ShopNow_Invoice_${invoiceNumber}.html`;
+    link.download = `CloudForge_Invoice_${invoiceNumber}.html`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -252,7 +252,7 @@ const ShopNowApp = () => {
 
       // Save to MongoDB
       const saveResult = await saveInvoiceToMongoDB(invoiceData);
-      
+
       if (saveResult.success) {
         // Use the invoice number and token from the backend response
         const finalInvoiceData = {
@@ -263,13 +263,13 @@ const ShopNowApp = () => {
 
         // Generate and download invoice
         generateInvoicePDF(finalInvoiceData);
-        
+
         // Clear cart and close modals
         setCart([]);
         setShowCart(false);
         setShowCheckoutForm(false);
         setCustomerDetails({ name: '', phone: '', email: '' });
-        
+
         const demoMessage = saveResult.isDemo ? ' (Demo mode - using local data)' : '';
         alert(`Order placed successfully! Your token is: ${saveResult.token}\nInvoice downloaded. Please bring the invoice and token to collect your items.${demoMessage}`);
       } else {
@@ -291,7 +291,7 @@ const ShopNowApp = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">ShopNow</h1>
+              <h1 className="text-2xl font-bold text-blue-600">CloudForge</h1>
             </div>
 
             {/* Desktop Navigation */}
@@ -410,7 +410,7 @@ const ShopNowApp = () => {
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white p-8 mb-8">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold mb-4">Welcome to ShopNow</h2>
+            <h2 className="text-3xl font-bold mb-4">Welcome to CloudForge</h2>
             <p className="text-lg mb-6">Discover amazing products at great prices. Shop with confidence and enjoy fast delivery.</p>
             <button className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-colors">
               Shop Now
@@ -489,7 +489,7 @@ const ShopNowApp = () => {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-4">
               {cart.length === 0 ? (
                 <p className="text-gray-500 text-center py-8">Your cart is empty</p>
@@ -535,7 +535,7 @@ const ShopNowApp = () => {
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-semibold">Total: ${getTotalPrice()}</span>
                 </div>
-                <button 
+                <button
                   onClick={() => setShowCheckoutForm(true)}
                   className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                 >
@@ -559,7 +559,7 @@ const ShopNowApp = () => {
                   <X className="h-6 w-6" />
                 </button>
               </div>
-              
+
               <div className="p-6">
                 <div className="space-y-4">
                   <div>
@@ -574,7 +574,7 @@ const ShopNowApp = () => {
                       placeholder="Enter your full name"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Phone Number *
@@ -587,7 +587,7 @@ const ShopNowApp = () => {
                       placeholder="Enter your phone number"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Email (Optional)
@@ -600,13 +600,13 @@ const ShopNowApp = () => {
                       placeholder="Enter your email"
                     />
                   </div>
-                  
+
                   <div className="bg-yellow-50 p-4 rounded-lg">
                     <h3 className="font-medium text-yellow-800 mb-2">Payment Method</h3>
                     <p className="text-sm text-yellow-700">Cash on Delivery - Pay when you collect your items</p>
                   </div>
                 </div>
-                
+
                 <div className="mt-6 flex space-x-3">
                   <button
                     onClick={() => setShowCheckoutForm(false)}
@@ -637,4 +637,4 @@ const ShopNowApp = () => {
   );
 };
 
-export default ShopNowApp;
+export default CloudForgeApp;
