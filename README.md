@@ -465,3 +465,111 @@ Deliverables: Architecture diagram, working Docker images, ECR repositories, Jen
 Step 1.1 â€” Inspect the application 
 
 Start in the CloudForge repository.
+
+
+CloudForge – Sprint 1
+
+Step 1 – Inspect the project
+
+
+Run:
+git status
+Get-ChildItem
+Test-Path .\docker-compose.yml
+docker --version
+docker compose version
+docker ps
+
+
+<img width="546" height="258" alt="image" src="https://github.com/user-attachments/assets/0451e1af-140d-4836-8c72-92d84a82e86b" /> 
+
+
+<img width="590" height="361" alt="image" src="https://github.com/user-attachments/assets/e691c8b7-dd0b-4500-82b3-1518fffde0e4" />
+
+
+<img width="883" height="206" alt="image" src="https://github.com/user-attachments/assets/72baef3d-144e-4db1-9cde-75bcffbb57f7" />
+
+
+Step 2 – Check package files before building
+
+1. Check package and lock files
+
+Run:
+Get-ChildItem .\frontend,.\admin,.\backend -Name package*
+
+
+2. Inspect why the admin package file changed
+
+   Run:
+   git diff -- .\admin\package.json
+   
+
+3. Check the current Dockerfile configurations
+
+   Run:
+   Select-String -Path .\frontend\Dockerfile,.\admin\Dockerfile,.\backend\Dockerfile -Pattern "FROM|COPY|RUN|ENV|ARG|EXPOSE|HEALTHCHECK|CMD"
+
+4. Check API routing
+Run:
+Select-String -Path .\frontend\nginx\default.conf,.\admin\nginx\default.conf -Pattern "location|proxy_pass"
+
+note: all three applications contain their package.json and package-lock.json files, so the Docker build prerequisites are present.
+
+Step 2 – Create Docker Compose configuration
+
+notepad .\docker-compose.yml 
+
+Step 2A – Validate the configuration 
+
+Run:
+docker compose config
+
+Step 3 – Build all Docker images
+
+Run:
+docker compose build
+
+Step 4 – Start CloudForge
+
+Run:
+docker compose up -d
+
+<img width="519" height="112" alt="image" src="https://github.com/user-attachments/assets/46e9e643-e9fc-42c3-84b0-ffb0fb369d91" />
+
+
+<img width="872" height="187" alt="image" src="https://github.com/user-attachments/assets/9f89d2ce-7098-4b10-8207-3563a38c4036" />
+
+Step 5 — Check container status
+
+
+<img width="885" height="208" alt="image" src="https://github.com/user-attachments/assets/0a6b0f32-2e4b-4977-b075-983b420f660d" />
+
+Step 6 — Test the backend API 
+
+Run: Invoke-RestMethod http://localhost:5000/api/health
+
+<img width="744" height="118" alt="image" src="https://github.com/user-attachments/assets/bc8624c1-3f1e-4ed5-b7d1-75243419cfe1" />
+
+. Test both web applications
+
+Run: 
+Invoke-WebRequest http://localhost:3000/ -UseBasicParsing 
+
+<img width="856" height="435" alt="image" src="https://github.com/user-attachments/assets/0fc33863-6b63-4aa4-9d57-05c60c6425f3" />
+
+Run:
+Invoke-WebRequest http://localhost:3001/ -UseBasicParsing 
+
+
+
+<img width="882" height="426" alt="image" src="https://github.com/user-attachments/assets/71a04564-a3b3-4ffd-b42a-63bd702fa36b" />
+
+
+Step 4 — Test the Nginx-to-backend connection
+
+Run:
+Invoke-RestMethod http://localhost:3000/api/health
+Invoke-RestMethod http://localhost:3001/api/health
+
+<img width="738" height="285" alt="image" src="https://github.com/user-attachments/assets/cc04a091-809c-4301-81fe-295ffc0f6fe9" />
+
