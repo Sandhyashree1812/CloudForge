@@ -571,5 +571,29 @@ Run:
 Invoke-RestMethod http://localhost:3000/api/health
 Invoke-RestMethod http://localhost:3001/api/health
 
-<img width="738" height="285" alt="image" src="https://github.com/user-attachments/assets/cc04a091-809c-4301-81fe-295ffc0f6fe9" />
+<img width="738" height="285" alt="image" src="https://github.com/user-attachments/assets/cc04a091-809c-4301-81fe-295ffc0f6fe9" /> 
 
+
+Both Nginx servers successfully forwarded requests to the backend:
+Test	Result
+Backend API — port 5000	Passed
+Customer frontend — port 3000	HTTP 200
+Admin dashboard — port 3001	HTTP 200
+Customer frontend → backend proxy	Passed
+Admin dashboard → backend proxy	Passed
+All four containers	Healthy
+
+CloudForge is now running as a containerized multi-service application using Docker Compose.
+
+-------------------------- 
+
+. Open CloudForge in your browser
+
+Open in browser:  Customer application: http://localhost:3000
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b0946b4d-a8eb-415a-ba05-f8c68e8733cd" />
+
+
+Open in browser: Admin dashboard : http://localhost:3001
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" />
