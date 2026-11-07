@@ -56,21 +56,26 @@ Proposed target architecture. Argo CD is optional, and the MongoDB hosting appro
 ====================================================== 
 
 2. How the architecture works
---- text   
-Stage	Technology	Responsibility
-1. Source code	GitHub	Stores CloudForge source code
-2. CI automation	Jenkins	Automatically runs the pipeline
-3. Build and test	Jenkins	Tests and builds application components
-4. Containerization	Docker	Creates frontend, admin and backend images
-5. Image storage	AWS ECR	Stores Docker images
-6. Infrastructure	Terraform	Provisions AWS infrastructure
-7. Configuration	Ansible	Configures servers and required software
-8. Deployment	Kubernetes / EKS	Runs application containers
-9. Packaging	Helm	Manages Kubernetes deployment configurations
-10. Monitoring	Prometheus	Collects application and infrastructure metrics
-11. Visualization	Grafana	Displays monitoring dashboards
-12. GitOps	Argo CD	Optional automated deployment synchronization
-    --- 
+
+Stage	                   Technology	                Responsibility
+1. Source code	            GitHub	               Stores CloudForge source code
+2. CI automation	         Jenkins               	Automatically runs the pipeline
+3. Build and test         	Jenkins               	Tests and builds application components
+4. Containerization      	Docker	               Creates frontend, admin and backend images
+5. Image storage	         AWS ECR	               Stores Docker images
+6. Infrastructure         	Terraform	            Provisions AWS infrastructure
+7. Configuration	         Ansible               	Configures servers and required software
+8. Deployment	            Kubernetes / EKS	      Runs application containers
+9. Packaging	            Helm            	      Manages Kubernetes deployment configurations
+10. Monitoring            	Prometheus	            Collects application and infrastructure metrics
+11. Visualization	         Grafana               	Displays monitoring dashboards
+12. GitOps	               Argo CD               	Optional automated deployment synchronization
+
+
+
+
+
+====================================== 
 
 Planned technology and infrastructure
 - Cloud platform: AWS
@@ -94,6 +99,8 @@ during the upcoming sprints.
 This structure preserves the folders described in the CloudForge project
 and adds dedicated Terraform, Ansible, monitoring, and testing
 organization as the project progresses. 
+
+======================================================================= 
 
 
 3. Project phases
@@ -138,7 +145,22 @@ results, and analyze cost
 10                                  Add Azure resources if the
 multi-cloud extension is required
 
---------------------------------------------------------------------------------------- 
+---------------------------------------------------------------------------------------  
+
+4. How we will implement the architecture across sprints
+Sprint	            Implementation
+Sprint 1	            Docker, Docker Compose, GitHub and Jenkins CI foundation
+Sprint 2	            AWS infrastructure provisioning using Terraform
+Sprint 3	            Ansible configuration and AWS infrastructure integration
+Sprint 4	            ECR image publishing and EKS deployment
+Sprint 5	            Kubernetes services, Helm and optional Argo CD
+Sprint 6	            Prometheus, Grafana and alerting
+Sprint 7	            End-to-end testing, documentation and cost analysis
+
+These are proposed implementation stages; the exact sprint boundaries can be adjusted as we progress. 
+
+=================================================== 
+
 ====================================================================================== 
 
 
@@ -250,6 +272,22 @@ All four containers                  Healthy
 
 CloudForge is now running as a containerized multi-service application
 using Docker Compose.
+
+================================================ 
+
+3. Application architecture
+This is the application structure we already implemented using Docker Compose.
+
+
+
+<img width="1184" height="1520" alt="mermaid-diagram (1)" src="https://github.com/user-attachments/assets/12b7e8ef-20af-452d-bf15-19a42ce1a858" />
+
+
+
+================================================================ 
+
+
+
 Step 9 - Open CloudForge in your browser
 Open the customer application:
 
@@ -279,6 +317,17 @@ What we have verified
 - The backend health endpoint works.
 - Both frontend and admin Nginx proxies successfully reach the
   backend.
+
+  ==================================
+
+  
+This local architecture is already working:
+- Customer frontend: http://localhost:3000
+- Admin dashboard: http://localhost:3001
+- Backend API: http://localhost:5000
+- MongoDB: Docker internal network, port 27017
+
+================================================================ 
 
 Step 3 - Prepare the GitHub update
 
