@@ -1,5 +1,7 @@
 # CloudForge backend (Node.js API)
 
+
+
 FROM node:18-alpine
 
 WORKDIR /app
@@ -22,7 +24,7 @@ ENV PORT=5000
 EXPOSE 5000
 
 HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:${PORT}/health || exit 1
+  CMD wget -qO- http://127.0.0.1:${PORT}/api/health || exit 1
 
 CMD ["node", "server.js"]
 

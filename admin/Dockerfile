@@ -12,9 +12,8 @@ RUN npm ci --no-audit --prefer-offline
 
 COPY . .
 # Build argument for dynamic user path
-ARG USER_NAME=cloudforge
-ENV PUBLIC_URL=/${USER_NAME}-admin
-ENV REACT_APP_API_BASE_URL=/${USER_NAME}-admin/api
+ENV PUBLIC_URL=/
+ENV REACT_APP_API_BASE_URL=/api
 RUN npm run build
 
 ############################
