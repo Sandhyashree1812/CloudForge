@@ -1,5 +1,285 @@
 CloudForge E-Commerce - Kubernetes Learning Project
 
+====================== 
+
+Project
+
+========================== 
+
+1. Project definition
+---------------------- 
+
+Project title: CloudForge End-to-End DevOps Project
+
+------------------------------------------------------- 
+
+Problem statement
+----------------- 
+
+Automate the testing, containerization, infrastructure provisioning,
+configuration, deployment, scaling, monitoring, and recovery of a
+full-stack e-commerce application using Infrastructure as Code and CI/CD
+practices.
+
+Primary deployment: 
+--------------------- 
+
+AWS using Terraform, EC2, ECR, EKS, S3, Jenkins,
+Ansible, Kubernetes, Prometheus, and Grafana.
+
+Extension:
+---------- 
+
+Azure using Terraform and AKS if multi-cloud
+implementation is explicitly required.
+
+------------------------------------------------------ 
+
+2. Detailed end-to-end architecture
+   
+The end-to-end architecture diagram is a planned project deliverable. It
+will be added as the AWS infrastructure and deployment design is
+developed.
+
+
+Planned technology and infrastructure
+- Cloud platform: AWS
+- Infrastructure as Code: Terraform
+- Compute and Kubernetes: EC2 and EKS
+- Container registry: Amazon ECR
+- Object storage: Amazon S3
+- CI/CD: Jenkins
+- Configuration management: Ansible
+- Application deployment: Kubernetes and Helm
+- GitOps extension: Argo CD, if required
+- Monitoring and visualization: Prometheus and Grafana
+Multi-cloud extension: Azure resources using Terraform and AKS will
+be considered only if the multi-cloud extension is explicitly required.
+Repository organization
+The current repository contains the MERN application and documentation.
+The Terraform, Ansible, Jenkins, Kubernetes, Helm, Argo CD, monitoring,
+and automation directories are planned deliverables and will be created
+during the upcoming sprints.
+
+This structure preserves the folders described in the CloudForge project
+and adds dedicated Terraform, Ansible, monitoring, and testing
+organization as the project progresses. 
+
+
+3. Project phases
+------------------- 
+
+  Phase                               What we will accomplish
+  1                                   Inspect CloudForge, run the
+application, and understand its
+components
+
+
+  2                                   Dockerize the frontend, admin
+dashboard, and backend
+
+
+  3                                   Set up GitHub and Jenkins CI
+
+
+  4                                   Use Terraform to provision AWS
+infrastructure
+
+
+  5                                   Use Ansible for server
+configuration
+
+
+  6                                   Push images to ECR and deploy to
+EKS
+
+
+  7                                   Add Helm and, if required, Argo CD
+
+  
+  8                                   Set up Prometheus, Grafana, and
+alerts
+
+  
+  9                                   Test the full pipeline, document
+results, and analyze cost
+
+
+10                                  Add Azure resources if the
+multi-cloud extension is required
+
+--------------------------------------------------------------------------------------- 
+====================================================================================== 
+
+
+4. Sprint 1 - Architecture design, Dockerization, and Jenkins setup
+Foundation
+
+Objective: Prepare CloudForge for container-based deployment and
+establish Jenkins as the automation engine.
+
+Planned deliverables: Architecture diagram, working Docker images,
+ECR repositories, Jenkins server, and GitHub integration.
+
+Sprint 1 implementation record: The Dockerfiles, Docker Compose
+deployment, service health checks, and frontend-to-backend proxy
+connections described below were implemented and verified. ECR
+repositories, a Jenkins server, and Jenkins pipeline integration remain
+planned deliverables; they are not claimed as completed in this
+implementation record.
+
+Sprint 1 - Implementation and verification
+
+Step 1.1 - Inspect the application
+
+Start in the CloudForge repository.
+
+CloudForge - Sprint 1, Step 1: Inspect the project
+
+Run these commands in PowerShell:
+git status
+Get-ChildItem
+Test-Path .\docker-compose.yml
+docker --version
+docker compose version
+docker ps
+
+<img width="546" height="258" alt="image" src="https://github.com/user-attachments/assets/0451e1af-140d-4836-8c72-92d84a82e86b" /> 
+
+
+<img width="590" height="361" alt="image" src="https://github.com/user-attachments/assets/e691c8b7-dd0b-4500-82b3-1518fffde0e4" />
+
+
+<img width="883" height="206" alt="image" src="https://github.com/user-attachments/assets/72baef3d-144e-4db1-9cde-75bcffbb57f7" />
+
+
+Step 1.2 - Check package files before building
+
+1. Check package and lock files
+Run:
+Get-ChildItem .\frontend,.\admin,.\backend -Name package*
+
+2. Inspect why the admin package file changed
+Run:
+git diff -- .\admin\package.json
+
+3. Check the current Dockerfile configurations
+Run:
+Select-String -Path .\frontend\Dockerfile,.\admin\Dockerfile,.\backend\Dockerfile -Pattern "FROM|COPY|RUN|ENV|ARG|EXPOSE|HEALTHCHECK|CMD"
+
+4. Check API routing
+
+Run:
+Select-String -Path .\frontend\nginx\default.conf,.\admin\nginx\default.conf -Pattern "location|proxy_pass"
+Note: All three applications contain their package.json and
+package-lock.json files, so the Docker build prerequisites are
+present.
+
+Step 2 - Create Docker Compose configuration
+Create or edit the Docker Compose configuration:
+notepad .\docker-compose.yml
+
+Step 2A - Validate the configuration
+Run:
+docker compose config
+Step 3 - Build all Docker images
+Run:
+docker compose build
+
+Step 4 - Start CloudForge
+Run:
+docker compose up -d
+
+Step 5 - Check container status
+
+Step 6 - Test the backend API
+Run:
+Invoke-RestMethod http://localhost:5000/api/health
+
+Step 7 - Test both web applications
+Test the customer frontend:
+Invoke-WebRequest http://localhost:3000/ -UseBasicParsing
+
+Test the admin dashboard:
+Invoke-WebRequest http://localhost:3001/ -UseBasicParsing
+
+Step 8 - Test the Nginx-to-backend connection
+Run:
+Invoke-RestMethod http://localhost:3000/api/health
+Invoke-RestMethod http://localhost:3001/api/health
+
+Both Nginx servers successfully forwarded requests to the backend.
+
+  Test                                 Result
+  Backend API - port 5000              Passed
+Customer frontend - port 3000        HTTP 200
+Admin dashboard - port 3001          HTTP 200
+Customer frontend to backend proxy   Passed
+Admin dashboard to backend proxy     Passed
+All four containers                  Healthy
+
+CloudForge is now running as a containerized multi-service application
+using Docker Compose.
+Step 9 - Open CloudForge in your browser
+Open the customer application:
+
+http://localhost:3000
+
+Open the admin dashboard:
+
+http://localhost:3001
+
+Step 10 - Test the products API
+Run:
+Invoke-RestMethod http://localhost:5000/api/products
+
+What we have verified
+1. Customer frontend - working
+- CloudForge homepage loads.
+- Six products are displayed.
+- Product images, names, prices, ratings, and Add to Cart buttons are
+  visible.
+2. Admin dashboard - working
+- CloudForge Admin dashboard loads.
+- Order statistics and revenue cards are displayed.
+- The orders section loads correctly. It currently shows no orders,
+  which is expected if no orders have been placed yet.
+3. Backend - working
+- /api/products returns product records.
+- The backend health endpoint works.
+- Both frontend and admin Nginx proxies successfully reach the
+  backend.
+
+Step 3 - Prepare the GitHub update
+
+The Sprint 1 implementation and verification evidence are maintained in
+this Git repository. The GitHub update should include the README,
+Dockerfiles, Nginx configuration, Docker Compose configuration, and
+project verification screenshots.
+Next planned work
+The next project work will continue with GitHub and Jenkins CI setup,
+followed by AWS infrastructure provisioning with Terraform, server
+configuration with Ansible, and deployment to EKS. Later sprints will
+address Helm, optional Argo CD, monitoring, alerting, end-to-end
+pipeline testing, documentation, and cost analysis. The Azure/AKS
+extension will be considered only if multi-cloud implementation is
+required.
+
+
+
+
+
+
+
+
+
+
+
+
+============================================ 
+
+CloudForge E-Commerce - Kubernetes Learning Project
+
 ======================= 
 
 Project
@@ -93,13 +373,6 @@ docker compose version
 docker ps
 
 
-<img width="546" height="258" alt="image" src="https://github.com/user-attachments/assets/0451e1af-140d-4836-8c72-92d84a82e86b" /> 
-
-
-<img width="590" height="361" alt="image" src="https://github.com/user-attachments/assets/e691c8b7-dd0b-4500-82b3-1518fffde0e4" />
-
-
-<img width="883" height="206" alt="image" src="https://github.com/user-attachments/assets/72baef3d-144e-4db1-9cde-75bcffbb57f7" />
 
 
 Step 2 – Check package files before building
