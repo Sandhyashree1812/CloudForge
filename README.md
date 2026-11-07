@@ -1,5 +1,4 @@
-
-# ðŸ›’ CloudForge E-Commerce - Kubernetes Learning Project
+CloudForge E-Commerce - Kubernetes Learning Project
 
 CloudForge is a **Kubernetes learning project** built around a full-stack MERN e-commerce application:
 - **Customer App** (React frontend)  
@@ -8,349 +7,6 @@ CloudForge is a **Kubernetes learning project** built around a full-stack MERN e
 
 This project teaches **Kubernetes** from container basics to production-ready deployments with Dockerfiles, Kubernetes manifests, Helm, GitOps and CICD using Jenkins.
 
-## ðŸŽ¯ Learning Objectives
-- Write Dockerfiles for containerising the application
-- Master Kubernetes fundamentals through hands-on practice
-- Understand and implement HELM Chart for application deployment on kubernetes
-- Implement GitOps workflows using ArgoCD
-- Implement CICD pipelines using Jenkins
----
-
-## ðŸ“ Project Structure
-
-```
-CloudForge/
-â”œâ”€â”€ backend/               # Node.js API server
-â”œâ”€â”€ frontend/              # React customer app
-â”œâ”€â”€ admin/                 # React admin dashboard
-â”œâ”€â”€ kubernetes
-â”‚   â”œâ”€â”€ k8s-manifests/     # Raw Kubernetes YAML files
-â”‚   â”œâ”€â”€ helm/              # Helm charts for package management
-â”‚   â”‚   â””â”€â”€ charts/        # Individual charts
-â”‚   â”œâ”€â”€ argocd/            # GitOps deployment configs
-â”‚   â””â”€â”€ pre-req/           # Cluster prerequisites
-â”œâ”€â”€ jenkins/               # Pipeline definitions (CI & CD)       
-â”œâ”€â”€ docs/                  # learning resources and guides
-â””â”€â”€ scripts/               # Automation and utility scripts
-```
-
----
-
-## ðŸš€ Learning Journey
-
-### Container & Kubernetes Basics
-1. **Start Here**: [docs/K8S-CONCEPTS.md](docs/K8S-CONCEPTS.md) - Core concepts explained
-2. **Raw Kubernetes Manifests**: `kubernetes/k8s-manifests/`
-
-### Package Management & Automation  
-3. **Helm Charts**: `kubernetes/helm/`
-4. **CI/CD Pipelines**: `jenkins/`
-
-### GitOps & Production Readiness
-5. **ArgoCD GitOps**: `kubernetes/argocd/`
-
-
-## Getting Started
-
-## ðŸ›  Prerequisites & Setup
-
-#### 1. Setup Tools**: [docs/TOOLS-SETUP-GUIDE.md](docs/TOOLS-SETUP-GUIDE.md)
-
-#### 2. AWS ECR Registry Setup 
-```bash
-# Setup AWS credentials first
-aws configure
-# Enter your AWS Access Key ID, Secret Access Key, region (us-east-1), and output format (json)
-
-# Or use environment variables
-export AWS_ACCESS_KEY_ID=your-access-key
-export AWS_SECRET_ACCESS_KEY=your-secret-key
-export AWS_DEFAULT_REGION=us-east-1
-
-# If above credentials are already set, run below command to verify
-aws sts get-caller-identity
-
-# Create ECR repositories either via the aws cli as mentioned below or via console (Has to be done once to create the ECR repo, skip this step when you are rebuilding the docker images):
-
-like:
-
-aws ecr create-repository --repository-name cloudforge/frontend --region <region>
-aws ecr create-repository --repository-name cloudforge/backend --region <region>
-aws ecr create-repository --repository-name cloudforge/admin --region <region>
-
-# Get login token (run this command everytime as the docker credentials are persisted only on the terminal)
-aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
-```
-
-
-#### 3. Update Configurations in below mentioned files
-
-
-## ðŸ”§ Personalization Required
-
-**For Multi-User Kubernetes Clusters**: To avoid conflicts when multiple learners use the same cluster, each user must personalize their deployment with unique identifiers.
-
-**IMPORTANT**: This project contains hardcoded references that you must update with your own values:
-
-3.1. Replace "cloudforge" with your username in these locations:
-
-  **Ingress Paths** (in both Kubernetes manifests and Helm charts):
-   - `kubernetes/k8s-manifests/ingress/ingress-cloudforge.yaml`
-     - Change `/cloudforge` to `/<your-username>`
-     - Change `/cloudforge-admin` to `/<your-username>-admin`
-   
-   - `kubernetes/helm/charts/frontend/values.yaml`
-     - Change `path: /cloudforge` to `path: /<your-username>`
-   
-   - `kubernetes/helm/charts/admin/values.yaml`
-     - Change `path: /cloudforge-admin` to `path: /<your-username>-admin`
-
-
-  **Nginx ConfigMaps**
-   - All references with 'cloudforge' to <your-username> in following files:
-   - `kubernetes/k8s-manifests/frontend/cm-nginx.yaml`   
-   - `kubernetes/k8s-manifests/admin/cm-nginx.yaml`
-
-
-  **Helm Chart Nginx Configurations**:
-   - All references with 'cloudforge' in the 'nginx.config' section to <your-username> in following files:
-   - `kubernetes/helm/charts/frontend/values.yaml` 
-   - `kubernetes/helm/charts/admin/values.yaml`
-
-  **Dockerfiles** (Build Arguments):
-   - `frontend/Dockerfile`
-     - Change `ARG USER_NAME=cloudforge` to `ARG USER_NAME=<your-username>`
-   
-   - `admin/Dockerfile`
-     - Change `ARG USER_NAME=cloudforge` to `ARG USER_NAME=<your-username>`
-
-  **Build Script** (optional):
-   - `scripts/build-and-push.sh`
-     - Update the example usage comments that reference "cloudforge"
-
-3.2. **ECR Repository Names** - Update to your username:
-   - All `kubernetes/k8s-manifests/*/deployment.yaml` files
-   - All `kubernetes/helm/charts/*/values.yaml` files
-   - All `jenkins\Jenkinsfile.*.*` files
-   - Change `shopnow/frontend` to `cloudforge/frontend`
-   - Change `shopnow/backend` to `cloudforge/backend`
-   - Change `shopnow/admin` to `cloudforge/admin`
-
-3.3. **Update Namespace** on these locations:
-  - `kubernetes/k8s-manifests/namespace/namespace.yaml` - Change namespace name
-  - All files in `kubernetes/k8s-manifests/*/` - Update namespace references
-  - `kubernetes/argocd/apps/*.yaml` - Update destination namespace
-  - All kubectl commands in this README - Replace `cloudforge-demo` with your namespace
-
-3.4. **Update ArgoCD Repository URL**:
-  - In `kubernetes/argocd/umbrella-application.yaml` and all `kubernetes/argocd/apps/*.yaml` files:
-  - Change `repoURL: 'https://github.com/Sandhyashree1812/CloudForge'` 
-  - To `repoURL: 'https://github.com/<your-github-username>/<your-repo-name>'`
-
-
-
-#### 4. Kubernetes Cluster Access (Make sure to have a running Kubernetes cluster, here is an example to connect with EKS)
-```bash
-# For EKS cluster
-aws eks update-kubeconfig --region <region> --name <your-cluster-name>
-
-# Verify access
-kubectl cluster-info
-kubectl get nodes
-```
-
-Note: All the below mentioned kubectl commands assume that you are working with "cloudforge-demo" namespace, update the namespace as per yours where ever you find "cloudforge-demo".
-
-#### 5. Docker Registry Secret (Only required for private ECR registry)
-**Note**: Skip this step if using public Docker Hub images or public ECR repositories.
-
-```bash
-# Create registry secret for private ECR image pulls
-kubectl create ns cloudforge-demo
-kubectl create secret docker-registry ecr-secret --docker-server=<account-id>.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1) --namespace=cloudforge-demo
-```
-
-#### 6. Install Pre-requisites in the Kubernetes Environment (Has to be done once per Kubernetes Cluster)
-```bash
-# Install metrics server (required for resource monitoring and HPA)
-kubectl apply -f kubernetes/pre-req/metrics-server.yaml
-
-# Install ingress-nginx controller (for external access)
-# For EKS, other cloud provider will have different file
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0-beta.0/deploy/static/provider/aws/deploy.yaml
-
-# For local development (minikube/kind/Docker Desktop)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/kind/deploy.yaml
-
-# Verify installations
-kubectl get pods -n kube-system
-kubectl get pods -n ingress-nginx
-kubectl top nodes  # Should work after metrics server is running
-kubectl top pods  # Should work after metrics server is running
-
-# To enable Persistent Storage
-
-# First install the EBS CSI driver as an EKS Addon
-
--> In the EKS Console, open your cluster â†’ go to Add-ons â†’ click Get more add-ons â†’ select Amazon EBS CSI driver â†’ click Next.
--> On the configuration page, Under Pod identity association, choose Create a new IAM role, and the console will auto-attach the AmazonEBSCSIDriverPolicy.
--> Confirm and click Create. The add-on installs, the IAM role is associated with the SA via Pod Identity, and the driver starts running.
--> Verify under Add-ons tab that the EBS CSI driver is active and under Pod identity associations tab you see the SA <-> IAM role mapping.
-
-# Install storage class for persistent volumes
-kubectl apply -f kubernetes/pre-req/storageclass-gp3.yaml
-
-# Verify storage class installation
-kubectl get storageclass
-
-
-```
-
-
-## âš¡ Build and Deploy the micro-services
-
-### 1. Build the docker images and push it to the ECR registry created above
-
-```bash
-scripts/build-and-push.sh <account-id>.dkr.ecr.<region>.amazonaws.com/<registry-name> <tag-name-number> <your-username> 
-
-# Example for user 'cloudforge' with tag 'latest' and ECR registry '<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/cloudforge':
-./scripts/build-and-push.sh <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/cloudforge latest cloudforge
-
-
-```
-
-### 2. Choose Your Deployment Method
-
-**Option A: Raw Kubernetes Manifests**
-```bash
-kubectl apply -f kubernetes/k8s-manifests/namespace/
-kubectl apply -f kubernetes/k8s-manifests/database/
-kubectl apply -f kubernetes/k8s-manifests/backend/
-kubectl apply -f kubernetes/k8s-manifests/frontend/
-kubectl apply -f kubernetes/k8s-manifests/admin/
-kubectl apply -f kubernetes/k8s-manifests/ingress/
-kubectl apply -f kubernetes/k8s-manifests/daemonsets-example/
-```
-
-**Option B: Helm Charts**
-
-```bash
-helm upgrade --install mongo kubernetes/helm/charts/mongo -n cloudforge-demo --create-namespace
-helm upgrade --install backend kubernetes/helm/charts/backend -n cloudforge-demo
-helm upgrade --install frontend kubernetes/helm/charts/frontend -n cloudforge-demo
-helm upgrade --install admin kubernetes/helm/charts/admin -n cloudforge-demo
-```
-
-**Option C: ArgoCD GitOps**
-```bash
-# Install ArgoCD first
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-# Create target namespace
-kubectl create namespace cloudforge-demo
-
-# Deploy applications
-kubectl apply -f kubernetes/argocd/umbrella-application.yaml
-
-# Check all ArgoCD application status:
-kubectl get applications -n argocd
-
-```
-
-### 3. Create users in MongoDB after the mongodb pods are healthy
-
-```bash
-
-# check the status of the mongo-0 pods 
-kubectl get pods -n cloudforge-demo
-
-# if mongo-0 pod is healthy, then run following command to create a user for the backend to connect
-# user credentials should be same as mentioned in the backend secrets-db.yaml file
-# First exex into the pods
-kubectl -n cloudforge-demo exec -it mongo-0 -- mongosh
-
-# Run below commands
-use admin;
-db.createUser({
-  user: 'shopuser',
-  pwd: 'CloudForgePass123',
-  roles: [
-    { role: 'readWrite', db: 'shopnow' },
-    { role: 'dbAdmin', db: 'shopnow' }
-  ]
-});
-
-exit
-
-# Restart backend deployment
-kubectl rollout restart deploy backend -n cloudforge-demo
-```
-
-### 3. Check the resources deployed
-
-```bash
-# Check Pods
-kubectl get pods -n cloudforge-demo
-
-# Check Deployment
-kubectl get deploy -n cloudforge-demo
-
-# Check Services
-kubectl get svc -n cloudforge-demo
-
-# Check daemonsets
-kubectl get daemonsets -n cloudforge-demo
-
-# Check statefulsets
-kubectl get statefulsets -n cloudforge-demo
-
-# Check HPA
-kubectl get hpa -n cloudforge-demo
-
-# Check all of the above at once
-kubectl get all -n cloudforge-demo
-
-# Check configmaps
-kubectl get cm -n cloudforge-demo
-
-# Check secrets
-kubectl get secrets -n cloudforge-demo
-
-# Check ingress
-kubectl get ing -n cloudforge-demo
-
-# Sequence to debug in case of any issue with the pods
-kubectl get pods -n cloudforge-demo
-kubectl describe pod backend-746cc99cd-cqrgf -n cloudforge-demo # Assuming that pod backend-746cc99cd-cqrgf has an error
-kubectl logs backend-746cc99cd-cqrgf -n cloudforge-demo --previous # If no details are found in the above command or if details like liveness probe failed are coming
-
-```
-
-
----
-
-## ðŸŒ Access the Apps
-
-* **Customer App** â†’ [http://<load-balancer-ip-or-dns>/<your-username>](http://<load-balancer-ip-or-dns>/<your-username>)
-* **Admin Dashboard** â†’ [http://<load-balancer-ip-or-dns>/<your-username>-admin](http://<load-balancer-ip-or-dns>/<your-username>-admin)
-
----
-
-## Additional Notes
-
-**Check the Application Architecture details**: [docs/APPLICATION-ARCHITECTURE.md](docs/APPLICATION-ARCHITECTURE.md)
-**Check the Troubleshooting Guide**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
----
-
-## ðŸ‘¨â€ðŸ’» Author
-
-## K Mohan Krishna
-
---- 
-
-================================= 
 
 Project
 
@@ -596,4 +252,36 @@ Open in browser:  Customer application: http://localhost:3000
 
 Open in browser: Admin dashboard : http://localhost:3001
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" /> 
+
+
+Run:
+Invoke-RestMethod http://localhost:5000/api/products
+
+
+
+Invoke-RestMethod http://localhost:5000/api/products
+<img width="915" height="109" alt="image" src="https://github.com/user-attachments/assets/40d43617-555d-4b82-8ee8-22f15b62a764" /> 
+
+
+---------------------------------------------- 
+
+
+
+What we've verified
+1. Customer frontend — working
+- CloudForge homepage loads.
+- Six products are displayed.
+- Product images, names, prices, ratings and Add to Cart buttons are visible.
+2. Admin dashboard — working
+- CloudForge Admin dashboard loads.
+- Order statistics and revenue cards are displayed.
+- The orders section loads correctly. It currently shows no orders, which is expected if no orders have been placed yet.
+3. Backend — working
+- /api/products returns product records.
+- The backend health endpoint works.
+- Both frontend and admin Nginx proxies successfully reach the backend.
+
+  ==========================================
+
+  Step 3 — Prepare the GitHub update
