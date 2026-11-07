@@ -56,9 +56,7 @@ Proposed target architecture. Argo CD is optional, and the MongoDB hosting appro
 ====================================================== 
 
 2. How the architecture works
-
 --- text   
-
 Stage	Technology	Responsibility
 1. Source code	GitHub	Stores CloudForge source code
 2. CI automation	Jenkins	Automatically runs the pipeline
