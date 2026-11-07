@@ -46,7 +46,7 @@ The current repository contains the MERN application and documentation. The Terr
 
 ==========================  
 
-2. The phases weâ€™ll follow
+2. The phases we'll follow
 Phase	What we will accomplish
 1	Inspect Cloudforge, run the application, understand its components
 2	Dockerize the frontend, admin dashboard, and backend
@@ -62,7 +62,7 @@ Phase	What we will accomplish
 ================== 
 
 
-4. Sprint 1 â€” Architecture design, Dockerization and Jenkins setup
+4. Sprint 1 Architecture design, Dockerization and Jenkins setup
 
 5. Sprint 1
 Foundation
@@ -73,7 +73,7 @@ Deliverables: Architecture diagram, working Docker images, ECR repositories, Jen
 
 =================== 
 
-Step 1.1 â€” Inspect the application 
+Step 1.1 Inspect the application 
 
 Start in the CloudForge repository.
 
