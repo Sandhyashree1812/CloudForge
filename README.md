@@ -12,7 +12,7 @@ Project
 PROJECT TITLE
 ===============
 
-Cloudforge â€” End-to-End DevOps Project
+CloudForge End-to-End DevOps Project
 
 
 Problem statement
@@ -34,48 +34,7 @@ Extension: Azure using Terraform and AKS if multi-cloud implementation is explic
 
 =========================================== 
 
---- text
 
-CloudForge/
-â”œâ”€â”€ frontend/                         # React customer app
-â”œâ”€â”€ admin/                            # React admin dashboard
-â”œâ”€â”€ backend/                          # Express API
-â”œâ”€â”€ docker-compose.yml                # Local development
-â”œâ”€â”€ terraform/
-â”‚   â”œâ”€â”€ bootstrap/                    # S3 backend bootstrap
-â”‚   â”œâ”€â”€ modules/
-â”‚   â”‚   â”œâ”€â”€ network/                  # VPC and subnets
-â”‚   â”‚   â””â”€â”€ eks/                      # EKS infrastructure
-â”‚   â””â”€â”€ environments/
-â”‚       â”œâ”€â”€ dev/
-â”‚       â””â”€â”€ prod/
-â”œâ”€â”€ ansible/
-â”‚   â”œâ”€â”€ inventory/
-â”‚   â”œâ”€â”€ playbooks/
-â”‚   â””â”€â”€ roles/
-â”œâ”€â”€ jenkins/
-â”‚   â”œâ”€â”€ Jenkinsfile.ci
-â”‚   â”œâ”€â”€ Jenkinsfile.infrastructure
-â”‚   â””â”€â”€ Jenkinsfile.deploy
-â”œâ”€â”€ kubernetes/
-â”‚   â”œâ”€â”€ k8s-manifests/
-â”‚   â”œâ”€â”€ helm/
-â”‚   â”‚   â””â”€â”€ charts/
-â”‚   â”œâ”€â”€ argocd/
-â”‚   â””â”€â”€ pre-req/
-â”œâ”€â”€ monitoring/
-â”‚   â”œâ”€â”€ prometheus/
-â”‚   â”œâ”€â”€ grafana/
-â”‚   â””â”€â”€ alerts/
-â”œâ”€â”€ scripts/
-â”‚   â”œâ”€â”€ build-and-push.sh
-â”‚   â””â”€â”€ cleanup.sh
-â”œâ”€â”€ tests/
-â”œâ”€â”€ docs/
-â”œâ”€â”€ .gitignore
-â””â”€â”€ README.md
-
---- 
 
 
 =================== 
