@@ -41,6 +41,38 @@ The end-to-end architecture diagram is a planned project deliverable. It
 will be added as the AWS infrastructure and deployment design is
 developed.
 
+=============================================== 
+
+1. Overall architecture diagram
+
+   
+
+<img width="1658" height="3160" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/5debde2b-685f-40b1-8350-160d068e27cf" />
+
+
+
+Proposed target architecture. Argo CD is optional, and the MongoDB hosting approach will be decided during the deployment design.
+
+====================================================== 
+
+2. How the architecture works
+
+--- text   
+
+Stage	Technology	Responsibility
+1. Source code	GitHub	Stores CloudForge source code
+2. CI automation	Jenkins	Automatically runs the pipeline
+3. Build and test	Jenkins	Tests and builds application components
+4. Containerization	Docker	Creates frontend, admin and backend images
+5. Image storage	AWS ECR	Stores Docker images
+6. Infrastructure	Terraform	Provisions AWS infrastructure
+7. Configuration	Ansible	Configures servers and required software
+8. Deployment	Kubernetes / EKS	Runs application containers
+9. Packaging	Helm	Manages Kubernetes deployment configurations
+10. Monitoring	Prometheus	Collects application and infrastructure metrics
+11. Visualization	Grafana	Displays monitoring dashboards
+12. GitOps	Argo CD	Optional automated deployment synchronization
+    --- 
 
 Planned technology and infrastructure
 - Cloud platform: AWS
