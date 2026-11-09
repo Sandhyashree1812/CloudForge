@@ -161,7 +161,7 @@ These are proposed implementation stages; the exact sprint boundaries can be adj
 
 =================================================== 
 
-====================================================================================== 
+
 
 
 4. Sprint 1 - Architecture design, Dockerization, and Jenkins setup
@@ -173,16 +173,26 @@ establish Jenkins as the automation engine.
 Planned deliverables: Architecture diagram, working Docker images,
 ECR repositories, Jenkins server, and GitHub integration.
 
-Sprint 1 implementation record: The Dockerfiles, Docker Compose
+Sprint 1 implementation record:
+---------------------------------
+
+The Dockerfiles, Docker Compose
 deployment, service health checks, and frontend-to-backend proxy
 connections described below were implemented and verified. ECR
 repositories, a Jenkins server, and Jenkins pipeline integration remain
 planned deliverables; they are not claimed as completed in this
 implementation record.
 
+--------------------------------------------
+
 Sprint 1 - Implementation and verification
 
-Step 1.1 - Inspect the application
+----------------------------------------- 
+
+Step 1.1 - Inspect the application 
+
+-------------------------------------- 
+
 
 Start in the CloudForge repository.
 
@@ -239,14 +249,24 @@ Run:
 docker compose build
 
 Step 4 - Start CloudForge
-Run:
-docker compose up -d
+Run: docker compose up -d 
 
-Step 5 - Check container status
+<img width="519" height="112" alt="image" src="https://github.com/user-attachments/assets/46e9e643-e9fc-42c3-84b0-ffb0fb369d91" />
+
+
+<img width="872" height="187" alt="image" src="https://github.com/user-attachments/assets/9f89d2ce-7098-4b10-8207-3563a38c4036" />
+
+Step 5 - Check container status 
+
+<img width="885" height="208" alt="image" src="https://github.com/user-attachments/assets/0a6b0f32-2e4b-4977-b075-983b420f660d" /> 
+
 
 Step 6 - Test the backend API
 Run:
 Invoke-RestMethod http://localhost:5000/api/health
+
+
+<img width="915" height="109" alt="image" src="https://github.com/user-attachments/assets/40d43617-555d-4b82-8ee8-22f15b62a764" /> 
 
 Step 7 - Test both web applications
 Test the customer frontend:
@@ -259,6 +279,8 @@ Step 8 - Test the Nginx-to-backend connection
 Run:
 Invoke-RestMethod http://localhost:3000/api/health
 Invoke-RestMethod http://localhost:3001/api/health
+
+
 
 Both Nginx servers successfully forwarded requests to the backend.
 
@@ -300,6 +322,8 @@ http://localhost:3001
 Step 10 - Test the products API
 Run:
 Invoke-RestMethod http://localhost:5000/api/products
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" /> 
 
 What we have verified
 1. Customer frontend - working
@@ -498,15 +522,12 @@ Step 4 – Start CloudForge
 Run:
 docker compose up -d
 
-<img width="519" height="112" alt="image" src="https://github.com/user-attachments/assets/46e9e643-e9fc-42c3-84b0-ffb0fb369d91" />
 
-
-<img width="872" height="187" alt="image" src="https://github.com/user-attachments/assets/9f89d2ce-7098-4b10-8207-3563a38c4036" />
 
 Step 5 — Check container status
 
 
-<img width="885" height="208" alt="image" src="https://github.com/user-attachments/assets/0a6b0f32-2e4b-4977-b075-983b420f660d" />
+
 
 Step 6 — Test the backend API 
 
@@ -558,9 +579,7 @@ Open in browser:  Customer application: http://localhost:3000
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b0946b4d-a8eb-415a-ba05-f8c68e8733cd" />
 
 
-Open in browser: Admin dashboard : http://localhost:3001
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" /> 
 
 
 Run:
@@ -568,8 +587,7 @@ Invoke-RestMethod http://localhost:5000/api/products
 
 
 
-Invoke-RestMethod http://localhost:5000/api/products
-<img width="915" height="109" alt="image" src="https://github.com/user-attachments/assets/40d43617-555d-4b82-8ee8-22f15b62a764" /> 
+
 
 
 ---------------------------------------------- 
