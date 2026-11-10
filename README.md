@@ -749,3 +749,64 @@ Run:
 git fetch origin
 
 Step 3.14A — Inspect the GitHub README update
+
+### Step 3.15 — Fix Docker CLI availability in Jenkins
+
+The first Jenkins pipeline execution failed because the Docker CLI was unavailable inside the Jenkins container.
+
+Error:
+`docker: not found`
+
+The Docker socket was already mounted, but Jenkins needed the Docker CLI executable.
+
+Updated `jenkins/Dockerfile` to copy the official Docker CLI executable from the `docker:cli` image:
+
+```dockerfile
+FROM docker:cli AS docker-cli
+
+FROM jenkins/jenkins:lts-jdk21
+
+USER root
+
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
+
+USER jenkins
+```
+
+Rebuilt and restarted Jenkins while preserving the Jenkins persistent volume.
+
+Verified Docker connectivity from inside Jenkins:
+- Docker CLI: 29.7.2
+- Docker Desktop Engine: 29.6.1
+- Docker client and server communication successful.
+
+### Step 3.16 — Successful Jenkins CI pipeline
+
+Executed `CloudForge-CI` Build #3 successfully.
+
+| Pipeline stage | Result |
+|---|---|
+| GitHub Checkout | SUCCESS |
+| Build Backend Image | SUCCESS |
+| Build Frontend Image | SUCCESS |
+| Build Admin Image | SUCCESS |
+
+Final pipeline output:
+
+`All CloudForge Docker images built successfully.`
+
+`Finished: SUCCESS`
+
+### Step 3.17 — Verify Docker images
+
+Verified that all three CI images were created locally:
+
+- `cloudforge-backend:ci`
+- `cloudforge-frontend:ci`
+- `cloudforge-admin:ci`
+
+All three image builds completed successfully.
+
+**Current milestone:** Local Jenkins CI pipeline successfully builds all three CloudForge application Docker images.
+
+**Next phase:** Integrate AWS Elastic Container Registry (ECR) to publish the images.
