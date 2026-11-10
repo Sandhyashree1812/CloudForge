@@ -749,3 +749,271 @@ Run:
 git fetch origin
 
 Step 3.14A — Inspect the GitHub README update
+Run:
+git show --stat origin/main
+git show origin/main -- README.md
+
+
+Step 3.14B — Merge GitHub changes
+Run:
+
+Step 1 — Check Docker inside Jenkins
+In your PowerShell terminal, run:
+
+Step 2 — Check the Docker socket
+Run:
+git merge origin/main
+git status
+git log -1 --oneline
+
+currently inside Vim, the text editor Git opened for the merge commit message. This is normal.
+Step 1 — Save the merge commit message
+Press these keys in this order:
+1. Press Esc.
+2. Type: :wq
+3. Press Enter.
+This saves the default merge message and closes Vim.
+
+Step 2 — Verify the merge
+You should return to PowerShell.
+
+Run:
+git status
+git log -1 --oneline
+
+Step 3.14C — Push to GitHub
+Run:
+git push origin main
+
+To verify, Run:
+git status
+git log -3 --oneline
+git ls-files Jenkinsfile 
+
+Step 1 — Fetch the latest GitHub changes
+Run this from C:\Users\sandy\CloudForge:
+git fetch origin
+
+Step 2 — Check the incoming GitHub commit
+Run:
+git log -1 --oneline origin/main
+git diff --stat HEAD..origin/main
+git diff --name-status HEAD..origin/main
+
+Step 3 — Inspect the GitHub commit
+Run:
+git show --summary --format=fuller origin/main
+git show origin/main -- README.md
+
+Step 4 — Merge the GitHub update safely
+First, confirm that your working tree has no tracked-file changes:
+
+Run:
+git status
+git merge origin/main
+git status
+
+This saves the merge message and completes the merge.
+git ls-files Jenkinsfile
+git log -4 --oneline
+
+
+
+Git opened the editor because the merge needs a commit message.
+Step 1 — Complete the merge
+In the terminal shown in your screenshot:
+1. Press Esc.
+2. Type :wq
+3. Press Enter.
+
+Step 2 — Verify the merge
+When PowerShell returns, run:
+git status
+git log -4 --oneline
+git ls-files Jenkinsfile
+
+Run this command
+git status
+
+-------------------- 
+
+Step 5 — Push the merged changes to GitHub
+Run:
+git push origin main
+git status
+git log -3 --oneline 
+
+-------------------------------- 
+
+Our local repository and GitHub main branch are now synchronized.
+
+Current project status
+Item	                                 Status
+Docker Compose application	            Working
+Jenkins container	                     Running
+Jenkins dashboard	                     Accessible
+Jenkinsfile committed	               Pushed
+Latest README update	                  Preserved
+GitHub synchronization	               Complete
+
+---------------------------------------------------------------
+
+
+Next: Run Jenkins CI Build #2
+1. Open Jenkins: http://localhost:8081
+2. Open CloudForge-CI.
+3. Click Build Now.
+4. Wait for the new build to appear in Build History.
+5. Click its build number.
+6. Select Console Output.
+
+   <img width="565" height="236" alt="image" src="https://github.com/user-attachments/assets/c072170e-8737-4b20-a760-bd8e6876655b" />
+
+This means Jenkins cannot find the Docker CLI inside its container. It is not a GitHub or application-code problem.
+
+Step 1 — Check Docker inside Jenkins
+Run:
+docker exec cloudforge-jenkins sh -c "which docker; docker --version"
+docker exec cloudforge-jenkins ls -l /var/run/docker.sock
+The Docker CLI is missing inside the Jenkins container. That's why Build #2 failed.
+
+Step 2 — Check the Docker socket
+Please run:
+docker exec cloudforge-jenkins ls -l /var/run/docker.sock
+The Docker socket is mounted inside Jenkins:
+srw-rw---- 1 root root ... /var/run/docker.sock
+
+We'll correct the Jenkins Dockerfile first.
+Step 3 — Update jenkins/Dockerfile
+Open the file in VS Code:
+code .\jenkins\Dockerfile
+Replace its entire contents.
+
+run:
+Get-Content .\jenkins\Dockerfile
+
+Step 4 — Rebuild the Jenkins image
+Run this command from the CloudForge project root:
+docker compose -f .\jenkins\docker-compose.yml build --no-cache
+
+Step 5 — Restart Jenkins with the updated image
+Run:
+docker compose -f .\jenkins\docker-compose.yml up -d --force-recreate
+docker ps --filter "name=cloudforge-jenkins"
+
+Step 6 — Verify Docker CLI inside Jenkins
+Run:
+docker exec cloudforge-jenkins docker --version
+
+Step 6 — Verify Docker CLI installation
+Now run:
+docker exec cloudforge-jenkins docker --version
+
+Then test whether Jenkins can communicate with Docker Desktop:
+docker exec cloudforge-jenkins docker version
+
+Step 7 — Check whether Docker was installed
+Run this PowerShell command:
+docker exec cloudforge-jenkins sh -c "dpkg-query -W docker.io 2>/dev/null; ls -l /usr/bin/docker 2>/dev/null; cat /etc/os-release"
+
+--------------------------- 
+
+notes:
+The docker.io package is registered as installed, but /usr/bin/docker does not exist. So Jenkins has the package metadata without the Docker executable it needs.
+
+Let's use a more reliable approach: copy the official Docker CLI executable from the docker:cli image into the Jenkins image. This avoids installing a full Docker daemon inside Jenkins; Jenkins will continue using the Docker Desktop socket already mounted.
+
+-------------------------- 
+
+Step 8 — Replace the Jenkins Dockerfile
+Open it:
+code .\jenkins\Dockerfile
+
+Replace the entire contents with:
+FROM docker:cli AS docker-cli
+
+FROM jenkins/jenkins:lts-jdk21
+
+USER root
+
+# Copy the official Docker CLI into Jenkins
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
+
+USER jenkins
+Save with Ctrl + S.
+
+Then verify the saved file:
+Get-Content .\jenkins\Dockerfile
+
+The updated Dockerfile is correct. It uses the official Docker CLI image as the source and copies only the Docker executable into Jenkins.
+
+Step 9 — Rebuild Jenkins
+Run:
+docker compose -f .\jenkins\docker-compose.yml build --no-cache
+
+Then recreate the Jenkins container:
+docker compose -f .\jenkins\docker-compose.yml up -d --force-recreate
+
+Step 10 — Verify Docker CLI
+Run:
+docker exec cloudforge-jenkins docker --version
+
+Jenkins now recognizes Docker: Docker version 29.7.2, build a7dcaa6 
+
+Now we need to verify that Jenkins can communicate with the actual Docker Desktop engine through the mounted socket.
+Step 11 — Test Docker engine connectivity
+Run:
+docker exec cloudforge-jenkins docker version
+We want to see both:
+- Client — Docker CLI inside Jenkins.
+- Server — Docker Desktop engine.
+
+- Both Docker Client and Server are responding successfully from inside Jenkins.
+
+- This means:
+- Docker CLI is installed in Jenkins.
+- Jenkins can access the Docker socket.
+- Jenkins can communicate with Docker Desktop.
+- The original docker: not found problem is resolved.
+
+- Step 12 — Run Jenkins Build #3
+1. Open Jenkins.
+2. Open CloudForge-CI.
+3. Click Build Now.
+4. Wait for Build #3 to appear.
+5. Open Build #3 → Console Output.
+
+Our first complete CloudForge Jenkins CI pipeline has passed successfully!
+
+
+
+<img width="1259" height="573" alt="image" src="https://github.com/user-attachments/assets/2f73ed23-ec1f-452b-9e7a-b71663981920" />
+
+
+
+<img width="1012" height="623" alt="image" src="https://github.com/user-attachments/assets/4284f62d-3c05-4f68-b147-8cf917a1b1e5" />
+
+
+Notes:
+
+What Jenkins successfully demonstrated
+1. Connected to your GitHub repository.
+2. Retrieved the Jenkinsfile.
+3. Checked out the latest main branch commit.
+4. Built the backend Docker image.
+5. Built the customer frontend Docker image.
+6. Built the admin dashboard Docker image.
+7. Completed the pipeline with Finished: SUCCESS.
+Your React frontend and admin production builds both reported Compiled successfully.
+
+--------------------------------- 
+
+Verify the three Docker images
+Let's confirm that the images are available in Docker Desktop.
+
+Run this in PowerShell:
+docker images cloudforge-backend
+docker images cloudforge-frontend
+docker images cloudforge-admin
+
+<img width="832" height="294" alt="image" src="https://github.com/user-attachments/assets/24de13e6-59ab-49ce-b332-655c109b9a90" />
