@@ -809,4 +809,326 @@ All three image builds completed successfully.
 
 **Current milestone:** Local Jenkins CI pipeline successfully builds all three CloudForge application Docker images.
 
-**Next phase:** Integrate AWS Elastic Container Registry (ECR) to publish the images.
+**Next phase:** Integrate AWS Elastic Container Registry (ECR) to publish the images. 
+
+--------------------------------- 
+
+We've established:
+1. Dockerized MERN application with four healthy services.
+2. Jenkins running in Docker.
+3. Jenkins CI pipeline successfully building all three application images.
+4. GitHub integration and synchronization.
+===================================================
+
+Sprint 2 — AWS Infrastructure Provisioning using Terraform for CloudForge.
+
+1. Check Terraform
+terraform --version
+
+2. Check AWS CLI
+aws --version
+
+
+3. Check Git
+git --version
+
+
+4. Check your project directory
+Get-ChildItem
+
+----------------------- 
+
+The development environment is ready for Sprint 2. Prerequisites verified
+
+Tool	                     Installed version      	Status
+Terraform	                  1.16.3	            Ready
+AWS CLI	                     2.35.4	            Ready
+Git                        	2.53.0	            Ready
+
+====================================== 
+
+Step 2 — Check whether you have AWS account access
+--------------------- 
+
+Step 3 — Create an IAM user for Terraform
+We'll create a dedicated IAM identity for this learning project.
+3.1 Open AWS IAM
+1. Sign in to the AWS Management Console.
+2. Search for IAM in the top search bar.
+3. Open IAM (Identity and Access Management).
+4. In the left navigation, select Users.
+5. Click Create user.
+6. 3.2 Enter the username
+   cloudforge-terraform
+You do not need to enable AWS Management Console access for this user.
+Click Next.
+
+
+Step 3.1 — Create an IAM group
+On your current screen:
+1. Keep Add user to group selected.
+2. Click Create group on the right.
+
+Step 3.2 — Name the group
+Enter:
+CloudForge-Terraform-Group
+don't attach any policies yet.
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/be9be193-95a0-4ef5-89be-77793f90311e" />
+
+
+Step 3.2 — Select the new group
+On the current page:
+1. Scroll down to the User groups (1) section.
+2. Find CloudForge-Terraform-Group.
+3. Tick the checkbox beside it.
+4. Scroll to the bottom and click Next.
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/290159f4-a9a1-4c50-a18b-56b1cd74b8bc" /> 
+
+Step 3.3: Check Groups
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bad7bbad-2cc5-4aff-9368-c81e650dad4a" />
+
+Step 3.4 — Configure permissions
+Next, click IAM user groups in the left navigation.
+1. Open CloudForge-Terraform-Group.
+2. Select its Permissions tab.
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c586ce1-3f0e-4c62-bdc3-ffb6e18dee17" />
+
+
+Step 3.5 — Attach an AWS managed policy
+For this learning environment, we'll temporarily use the AWS managed PowerUserAccess policy. It provides broad access to AWS services but excludes IAM administration, so it is not a least-privilege production policy. We'll replace it with a narrower custom policy as the project matures.
+1. Click Add permissions.
+2. Select Attach policies from the dropdown.
+3. Search for:
+PowerUserAccess
+4. Tick the checkbox beside the AWS-managed PowerUserAccess policy.
+5. Click Add permissions.
+
+6. We need to let AWS CLI authenticate as cloudforge-terraform.
+1. Click IAM users in the left navigation.
+2. Click cloudforge-terraform.
+3. Open the Security credentials tab.
+4. Scroll to Access keys.
+5. Click Create access key.
+6. Select Command Line Interface (CLI).
+7. Acknowledge the recommendation and continue.
+8. Create the access key.
+
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7a1038aa-fb72-4098-b4a0-c5892028787f" />
+
+AWS will display an Access key ID and Secret access key. Download the CSV or store them securely. Do not upload the CSV or share either key here.
+
+Step 5 — Configure AWS CLI
+Once the access key is created, return to PowerShell:
+aws configure
+
+Enter the following when prompted:
+Prompt	What to enter
+AWS Access Key ID	Your new access key ID
+AWS Secret Access Key	Your new secret access key
+Default region name	us-east-1
+Default output format	json
+
+Step 6 — Verify authentication
+Run:
+aws sts get-caller-identity
+
+Step 7 — Create the Terraform folder structure
+
+Run: New-Item -ItemType Directory -Force .\terraform 
+
+Then create these files:
+Run:
+New-Item -ItemType File -Force .\terraform\main.tf
+New-Item -ItemType File -Force .\terraform\variables.tf
+New-Item -ItemType File -Force .\terraform\outputs.tf
+New-Item -ItemType File -Force .\terraform\versions.tf 
+New-Item -ItemType File -Force .\terraform\.gitignore 
+
+
+<img width="271" height="212" alt="image" src="https://github.com/user-attachments/assets/b32f15dd-5c66-42e2-8e02-ff1c51c6ac58" /> 
+
+
+Step 8 — Verify the files
+Run:
+Get-ChildItem .\terraform
+
+<img width="670" height="295" alt="image" src="https://github.com/user-attachments/assets/2a9c6e99-fb6f-4d70-aefa-ff10b26aebeb" />
+
+
+Step 9 — Configure Terraform version and AWS provider
+
+
+Step 10 — Configure variables
+Open:
+code .\terraform\variables.tf
+
+Step 11 — Configure the VPC
+Open:
+code .\terraform\main.tf
+
+Step 12 — Configure outputs
+Open:
+code .\terraform\outputs.tf
+
+Step 13 — Protect Terraform files
+Open:
+code .\terraform\.gitignore 
+
+Step 14 — Initialize Terraform
+
+Move into the Terraform directory:
+cd .\terraform
+
+
+Run:
+terraform init
+Open versions.tf in VS Code:
+Run: code .\terraform\versions.tf 
+
+-------------------------------- 
+
+What this does:
+- Downloads the AWS provider.
+- Initializes the Terraform working directory.
+- Prepares Terraform to communicate with AWS.
+
+----------------------- 
+
+Step 15 — Format and validate
+After terraform init succeeds, run these commands individually:
+
+1. Format the Terraform files
+terraform fmt
+
+
+2. Validate the configuration
+terraform validate
+
+<img width="807" height="487" alt="image" src="https://github.com/user-attachments/assets/2c8f1630-0ec6-421d-a485-11871d39f578" />
+
+
+4. Check the AWS identity again
+aws sts get-caller-identity
+
+Step 18 — Create the execution plan
+Run this from C:\Users\sandy\CloudForge\terraform:
+terraform plan -out=cloudforge.tfplan
+
+
+<img width="719" height="290" alt="image" src="https://github.com/user-attachments/assets/f465225e-1a3f-4db7-8875-9da92b04aa02" />
+
+
+
+Step 19 — Review of planned AWS infrastructure
+
+<img width="715" height="319" alt="image" src="https://github.com/user-attachments/assets/2ad73461-5b74-4daa-89a4-27a748bf3ae6" />
+
+
+Step 20 — Apply the Terraform plan
+The plan looks correct. If you're happy to create these five resources in your AWS account, run:
+terraform apply "cloudforge.tfplan" 
+
+<img width="757" height="366" alt="image" src="https://github.com/user-attachments/assets/aec99323-7858-493b-a73a-c718517f7a9e" />
+
+
+<img width="830" height="329" alt="image" src="https://github.com/user-attachments/assets/bfbc4d85-cf5b-417e-9f14-736792615271" /> 
+
+
+======================================================= 
+
+The Terraform successfully created all five AWS resources.
+
+<img width="595" height="345" alt="image" src="https://github.com/user-attachments/assets/e62873e1-2aa9-4ef8-885c-a40596250d04" />
+
+====================================================== 
+
+Step 21 — Verify AWS resources
+
+1. Verify VPC
+2. Run: aws ec2 describe-vpcs --filters "Name=tag:Project,Values=CloudForge" --query "Vpcs[*].[VpcId,CidrBlock,State]" --output table
+
+<img width="835" height="131" alt="image" src="https://github.com/user-attachments/assets/fd2246ba-5466-4d88-ae4b-cbac4dd41e2c" />
+
+
+2. Verify subnet
+aws ec2 describe-subnets --subnet-ids subnet-0e511a9a4d6dfbb17 --output table
+
+<img width="823" height="541" alt="image" src="https://github.com/user-attachments/assets/483e6d94-3783-4c33-8af4-326334579d97" />
+
+
+Verify Internet Gateway
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdc eea57" --output table
+
+<img width="829" height="124" alt="image" src="https://github.com/user-attachments/assets/b21fc431-44d5-4437-98d9-bff8e3d7d1ab" />
+
+
+   
+======================= 
+
+Step 22 — Preserve the Terraform state
+
+Step 1 — Correct the Internet Gateway command
+
+Run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+
+Step 2 — Verify Terraform state
+Run:
+cd C:\Users\sandy\CloudForge\terraform
+terraform state list
+
+<img width="612" height="135" alt="image" src="https://github.com/user-attachments/assets/d2706592-4f98-4189-b793-bf58c3b1bafd" />
+
+
+Step 23 — Final Internet Gateway verification
+We still need to correct the earlier Internet Gateway lookup.
+
+Run this from PowerShell:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table 
+
+
+<img width="825" height="184" alt="image" src="https://github.com/user-attachments/assets/cf1cfc8f-df64-47c6-b6d8-5ffabcc493b7" /> 
+
+Step 24 — Check the Terraform project files
+Then run:
+Get-ChildItem C:\Users\sandy\CloudForge\terraform -Force
+
+<img width="768" height="342" alt="image" src="https://github.com/user-attachments/assets/9f7942d3-c8a6-45aa-8944-88bda5c8a035" />
+
+
+Step 25 — One final AWS verification
+We still need the Internet Gateway verification result.
+
+Run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+
+<img width="817" height="180" alt="image" src="https://github.com/user-attachments/assets/7faf8cc0-5dba-4584-ae80-342afb0c1ba7" />
+
+
+igw-0ef2be14fb28bf45c    available
+
+
+Step 26 — Check Git ignore protection
+Run:
+Get-Content .\.gitignore
+
+Step 26 — Verify state and plan protection
+Run these commands:
+git check-ignore .\terraform.tfstate
+git check-ignore .\cloudforge.tfplan
+
+
+Step 27 — Check the Internet Gateway
+From your current directory, run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+<img width="828" height="435" alt="image" src="https://github.com/user-attachments/assets/b0fb6f3f-61cf-4e63-bb92-60b2aa423e4b" />
+
