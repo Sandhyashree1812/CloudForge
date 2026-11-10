@@ -1130,5 +1130,18 @@ Step 27 — Check the Internet Gateway
 From your current directory, run:
 aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
 
-<img width="828" height="435" alt="image" src="https://github.com/user-attachments/assets/b0fb6f3f-61cf-4e63-bb92-60b2aa423e4b" />
+<img width="828" height="435" alt="image" src="https://github.com/user-attachments/assets/b0fb6f3f-61cf-4e63-bb92-60b2aa423e4b" /> 
 
+Step 28 — Check Git status before staging
+git status --short
+Get-Content .\README.md -Tail 35 
+
+<img width="768" height="182" alt="image" src="https://github.com/user-attachments/assets/5d70709b-12e0-4f33-bf16-abf64f512d90" />
+
+
+<img width="762" height="554" alt="image" src="https://github.com/user-attachments/assets/a066c58f-8d6a-41ca-832e-c5542ba12b3e" />
+
+
+Step 29 — Check exactly which Terraform files Git will include
+Run:
+git status --short --untracked-files=all
