@@ -810,3 +810,96 @@ All three image builds completed successfully.
 **Current milestone:** Local Jenkins CI pipeline successfully builds all three CloudForge application Docker images.
 
 **Next phase:** Integrate AWS Elastic Container Registry (ECR) to publish the images.
+
+---
+
+# Sprint 2 – AWS Infrastructure Provisioning using Terraform
+
+## Objective
+
+Provision the AWS networking foundation for CloudForge using Terraform (Infrastructure as Code).
+
+## 1. Environment
+
+| Tool | Version |
+|---|---|
+| Terraform | 1.16.3 |
+| AWS CLI | 2.35.4 |
+| AWS Provider | 6.72.0 |
+| Git | 2.53.0 |
+
+**AWS Region:** us-east-1 (N. Virginia)
+
+## 2. Terraform project structure
+
+```text
+terraform/
+├── .gitignore
+├── .terraform.lock.hcl
+├── main.tf
+├── outputs.tf
+├── variables.tf
+└── versions.tf
+```
+
+## 3. AWS infrastructure provisioned
+
+| Resource | Configuration / ID |
+|---|---|
+| VPC | 10.0.0.0/16 |
+| VPC ID | vpc-0e63f9b6ccdceae57 |
+| Public subnet | 10.0.1.0/24 |
+| Subnet ID | subnet-0e511a9a4d6dfbb17 |
+| Availability Zone | us-east-1f |
+| Internet Gateway | igw-0ef2be14fb28bf45c |
+| Public route table | rtb-04e2ba8409d56706b |
+| Route table association | rtbassoc-03c16767847e4235a |
+
+Automatic public IPv4 assignment is enabled on the public subnet.
+
+## 4. Terraform validation
+
+Successfully executed:
+
+- terraform init
+- terraform fmt
+- terraform validate
+- terraform plan
+- terraform apply
+- terraform state list
+
+Apply result:
+
+`Apply complete! Resources: 5 added, 0 changed, 0 destroyed.`
+
+## 5. AWS verification
+
+AWS CLI independently confirmed:
+
+- VPC state: available
+- Public subnet: 10.0.1.0/24
+- Public IP assignment: enabled
+- Internet Gateway attachment: available
+- Terraform state: five resources
+
+## 6. Security and Git configuration
+
+Terraform `.gitignore` excludes:
+
+- `.terraform/`
+- Terraform state files
+- Terraform plan files
+- Override files
+- Crash logs
+
+The `.terraform.lock.hcl` file is retained for provider version consistency.
+
+Terraform state and plan files are kept locally and must not be committed to GitHub.
+
+## 7. Sprint 2 milestone
+
+**Completed:** AWS VPC, public subnet, Internet Gateway, public route table and route table association.
+
+**Not yet implemented:** EC2 deployment, ECR image publishing, EKS cluster, remote Terraform state in S3, Ansible configuration and Kubernetes deployment.
+
+**Next phase:** Container image publishing and application deployment on AWS.
