@@ -1181,4 +1181,105 @@ The CloudForge AWS networking foundation was successfully provisioned using Terr
 
 ### Remaining implementation
 
-EC2 deployment, ECR image publishing, EKS, remote Terraform state in S3, Ansible configuration and Kubernetes deployment remain future implementation tasks.
+EC2 deployment, ECR image publishing, EKS, remote Terraform state in S3, Ansible configuration and Kubernetes deployment remain future implementation tasks. 
+
+
+================================== 
+Sprint 2 – AWS Infrastructure and Container Registry
+
+Step 1 — Verify the Docker images
+
+run:
+docker image ls --format "table {{.Repository}}`t{{.Tag}}`t{{.ID}}" | Select-String "cloudforge-(backend|frontend|admin)"
+
+<img width="923" height="244" alt="image" src="https://github.com/user-attachments/assets/fce01974-75a4-4466-86da-18f5748470b5" /> 
+
+
+Step 2 — Create CloudForge ECR repositories
+
+Run:
+aws ecr create-repository --repository-name cloudforge-backend --region us-east-1
+
+aws ecr create-repository --repository-name cloudforge-frontend --region us-east-1
+
+aws ecr create-repository --repository-name cloudforge-admin --region us-east-1
+
+
+<img width="917" height="187" alt="image" src="https://github.com/user-attachments/assets/9f354a16-be72-4fa4-a7fe-808171835802" />
+
+
+Step 9 — Authenticate Docker with AWS ECR 
+
+<img width="901" height="50" alt="image" src="https://github.com/user-attachments/assets/9d305b90-4dc7-4c14-9a3b-17b054b67165" />
+
+
+Step 14 — Tag the three CI images for ECR 
+
+Run:
+$registry = "759910672539.dkr.ecr.us-east-1.amazonaws.com"
+
+docker tag cloudforge-backend:ci "$registry/cloudforge-backend:latest"
+
+docker tag cloudforge-frontend:ci "$registry/cloudforge-frontend:latest"
+
+docker tag cloudforge-admin:ci "$registry/cloudforge-admin:latest"
+
+<img width="896" height="88" alt="image" src="https://github.com/user-attachments/assets/7e0d984e-492a-4d9b-b64a-48d9cbd61088" />
+
+Run:
+docker image ls --format "table {{.Repository}}`t{{.Tag}}" | Select-String "cloudforge-(backend|frontend|admin)" 
+
+<img width="925" height="295" alt="image" src="https://github.com/user-attachments/assets/c986c9ae-ed67-4e6e-bfc9-81cb3122343b" /> 
+
+
+Step 15 — Push images to AWS ECR
+Run these commands one at a time:
+
+1. Push backend
+docker push 759910672539.dkr.ecr.us-east-1.amazonaws.com/cloudforge-backend:latest
+
+<img width="913" height="245" alt="image" src="https://github.com/user-attachments/assets/a1b05772-f84a-4219-adc2-5cf597342e49" />
+
+
+
+
+3. Push frontend
+docker push 759910672539.dkr.ecr.us-east-1.amazonaws.com/cloudforge-frontend:latest
+
+
+<img width="908" height="216" alt="image" src="https://github.com/user-attachments/assets/1448a834-d336-43af-9c16-e99f5ebdcc06" />
+
+
+
+
+4. Push admin
+docker push 759910672539.dkr.ecr.us-east-1.amazonaws.com/cloudforge-admin:latest
+
+
+<img width="923" height="222" alt="image" src="https://github.com/user-attachments/assets/62425864-9dc4-488a-a44a-ee6f8fd77207" />
+
+
+Step 16 — Verify images directly in AWS
+Let's independently confirm that AWS ECR has all three images.
+
+Run:
+
+aws ecr describe-images --repository-name cloudforge-backend --region us-east-1 --query "imageDetails[*].[imageTags[0],imageDigest,imageSizeInBytes]" --output table
+
+aws ecr describe-images --repository-name cloudforge-frontend --region us-east-1 --query "imageDetails[*].[imageTags[0],imageDigest,imageSizeInBytes]" --output table
+
+aws ecr describe-images --repository-name cloudforge-admin --region us-east-1 --query "imageDetails[*].[imageTags[0],imageDigest,imageSizeInBytes]" --output table 
+
+
+<img width="914" height="439" alt="image" src="https://github.com/user-attachments/assets/ac368ba5-078b-4559-819f-ef1e1942cf9e" />
+
+
+============================================ 
+
+Sprint 3 – AWS EC2 Deployment using Docker Compose.
+
+Sprint 3 deployment architecture
+
+<img width="645" height="343" alt="image" src="https://github.com/user-attachments/assets/a6c10ef1-0829-48bc-8f34-d6e9d6a66081" />
+
+
