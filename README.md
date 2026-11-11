@@ -1,53 +1,53 @@
-CloudForge E-Commerce - Kubernetes Learning Project
+﻿CloudForge E-Commerce - Kubernetes Learning Project
 
-====================== 
+======================
 
 Project
 
-========================== 
+==========================
 
 1. Project definition
----------------------- 
+----------------------
 
 Project title: CloudForge End-to-End DevOps Project
 
-------------------------------------------------------- 
+-------------------------------------------------------
 
 Problem statement
------------------ 
+-----------------
 
 Automate the testing, containerization, infrastructure provisioning,
 configuration, deployment, scaling, monitoring, and recovery of a
 full-stack e-commerce application using Infrastructure as Code and CI/CD
 practices.
 
-Primary deployment: 
---------------------- 
+Primary deployment:
+---------------------
 
 AWS using Terraform, EC2, ECR, EKS, S3, Jenkins,
 Ansible, Kubernetes, Prometheus, and Grafana.
 
 Extension:
----------- 
+----------
 
 Azure using Terraform and AKS if multi-cloud
 implementation is explicitly required.
 
------------------------------------------------------- 
+------------------------------------------------------
 
 2. Detailed end-to-end architecture
-   
+
 The end-to-end architecture diagram is a planned project deliverable. It
 will be added as the AWS infrastructure and deployment design is
 developed.
 
-===============================================  
+===============================================
 
 
 
 1. Overall architecture diagram
 
-   
+
 
 <img width="1658" height="3160" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/5debde2b-685f-40b1-8350-160d068e27cf" />
 
@@ -55,7 +55,7 @@ developed.
 
 Proposed target architecture. Argo CD is optional, and the MongoDB hosting approach will be decided during the deployment design.
 
-====================================================== 
+======================================================
 
 2. How the architecture works
 
@@ -73,16 +73,16 @@ Stage	                   Technology	                Responsibility
 11. Visualization	         Grafana               	Displays monitoring dashboards
 12. GitOps	               Argo CD               	Optional automated deployment synchronization
 
-======================= 
+=======================
 
 Notes:
 This structure preserves the folders described in the CloudForge document and adds dedicated Terraform, Ansible, monitoring and testing organization.
 
-The current repository contains the MERN application and documentation. The Terraform, Ansible, Jenkins, Kubernetes, Helm, ArgoCD, monitoring, and automation directories shown above are planned deliverables and will be created during the upcoming sprints. 
+The current repository contains the MERN application and documentation. The Terraform, Ansible, Jenkins, Kubernetes, Helm, ArgoCD, monitoring, and automation directories shown above are planned deliverables and will be created during the upcoming sprints.
 
 
 
-====================================== 
+======================================
 
 Planned technology and infrastructure
 - Cloud platform: AWS
@@ -105,13 +105,13 @@ during the upcoming sprints.
 
 This structure preserves the folders described in the CloudForge project
 and adds dedicated Terraform, Ansible, monitoring, and testing
-organization as the project progresses. 
+organization as the project progresses.
 
-======================================================================= 
+=======================================================================
 
 
 3. Project phases
-------------------- 
+-------------------
 
   Phase                               What we will accomplish
   1                                   Inspect CloudForge, run the
@@ -140,11 +140,11 @@ EKS
 
   7                                   Add Helm and, if required, Argo CD
 
-  
+
   8                                   Set up Prometheus, Grafana, and
 alerts
 
-  
+
   9                                   Test the full pipeline, document
 results, and analyze cost
 
@@ -152,7 +152,7 @@ results, and analyze cost
 10                                  Add Azure resources if the
 multi-cloud extension is required
 
----------------------------------------------------------------------------------------  
+---------------------------------------------------------------------------------------
 
 4. How we will implement the architecture across sprints
 Sprint	            Implementation
@@ -164,21 +164,21 @@ Sprint 5	            Kubernetes services, Helm and optional Argo CD
 Sprint 6	            Prometheus, Grafana and alerting
 Sprint 7	            End-to-end testing, documentation and cost analysis
 
-These are proposed implementation stages; the exact sprint boundaries can be adjusted as we progress. 
+These are proposed implementation stages; the exact sprint boundaries can be adjusted as we progress.
 
-=================================================== 
+===================================================
 
-====================================================================================== 
+======================================================================================
 
 
 4. Sprint 1 - Architecture design, Dockerization, and Jenkins setup
 Foundation
 
 
-======================================= 
+=======================================
 
 Objective:
----------- 
+----------
 Prepare CloudForge for container-based deployment and
 establish Jenkins as the automation engine.
 
@@ -186,10 +186,10 @@ Planned deliverables: Architecture diagram, working Docker images,
 ECR repositories, Jenkins server, and GitHub integration.
 
 
------------------------------------------------------------------- 
+------------------------------------------------------------------
 
-Sprint 1 
------------------ 
+Sprint 1
+-----------------
 
 implementation record: The Dockerfiles, Docker Compose
 deployment, service health checks, and frontend-to-backend proxy
@@ -198,13 +198,13 @@ repositories, a Jenkins server, and Jenkins pipeline integration remain
 planned deliverables; they are not claimed as completed in this
 implementation record.
 
------------------------------------------------------------------------- 
+------------------------------------------------------------------------
 
 Sprint 1 - Implementation and verification
 ------------------------------------------
 
 Step 1.1 - Inspect the application
------------------------------------- 
+------------------------------------
 
 
 Start in the CloudForge repository.
@@ -219,7 +219,7 @@ docker --version
 docker compose version
 docker ps
 
-<img width="546" height="258" alt="image" src="https://github.com/user-attachments/assets/0451e1af-140d-4836-8c72-92d84a82e86b" /> 
+<img width="546" height="258" alt="image" src="https://github.com/user-attachments/assets/0451e1af-140d-4836-8c72-92d84a82e86b" />
 
 
 <img width="590" height="361" alt="image" src="https://github.com/user-attachments/assets/e691c8b7-dd0b-4500-82b3-1518fffde0e4" />
@@ -263,21 +263,21 @@ docker compose build
 
 Step 4 - Start CloudForge
 Run:
-docker compose up -d 
+docker compose up -d
 
 
 <img width="519" height="112" alt="image" src="https://github.com/user-attachments/assets/46e9e643-e9fc-42c3-84b0-ffb0fb369d91" />
 
 
 
-<img width="872" height="187" alt="image" src="https://github.com/user-attachments/assets/9f89d2ce-7098-4b10-8207-3563a38c4036" /> 
+<img width="872" height="187" alt="image" src="https://github.com/user-attachments/assets/9f89d2ce-7098-4b10-8207-3563a38c4036" />
 
 
 
-Step 5 - Check container status  
+Step 5 - Check container status
 
 
-<img width="885" height="208" alt="image" src="https://github.com/user-attachments/assets/0a6b0f32-2e4b-4977-b075-983b420f660d" /> 
+<img width="885" height="208" alt="image" src="https://github.com/user-attachments/assets/0a6b0f32-2e4b-4977-b075-983b420f660d" />
 
 
 Step 6 - Test the backend API
@@ -288,29 +288,29 @@ Invoke-RestMethod http://localhost:5000/api/health
 
 Step 7 - Test both web applications
 Test the customer frontend:
-Run: Invoke-WebRequest http://localhost:3000/ -UseBasicParsing 
+Run: Invoke-WebRequest http://localhost:3000/ -UseBasicParsing
 
 <img width="856" height="435" alt="image" src="https://github.com/user-attachments/assets/0fc33863-6b63-4aa4-9d57-05c60c6425f3" />
 
 Test the admin dashboard:
 
 Run:
-Invoke-WebRequest http://localhost:3001/ -UseBasicParsing 
+Invoke-WebRequest http://localhost:3001/ -UseBasicParsing
 
 
-<img width="882" height="426" alt="image" src="https://github.com/user-attachments/assets/71a04564-a3b3-4ffd-b42a-63bd702fa36b" /> 
+<img width="882" height="426" alt="image" src="https://github.com/user-attachments/assets/71a04564-a3b3-4ffd-b42a-63bd702fa36b" />
 
 
 
 Step 8 - Test the Nginx-to-backend connection
 Run:
 Invoke-RestMethod http://localhost:3000/api/health
-Invoke-RestMethod http://localhost:3001/api/health 
+Invoke-RestMethod http://localhost:3001/api/health
 
 
-<img width="738" height="285" alt="image" src="https://github.com/user-attachments/assets/cc04a091-809c-4301-81fe-295ffc0f6fe9" /> 
+<img width="738" height="285" alt="image" src="https://github.com/user-attachments/assets/cc04a091-809c-4301-81fe-295ffc0f6fe9" />
 
----------------------------------------------- 
+----------------------------------------------
 
 
 Both Nginx servers successfully forwarded requests to the backend.
@@ -326,7 +326,7 @@ All four containers                  Healthy
 CloudForge is now running as a containerized multi-service application
 using Docker Compose.
 
-================================================ 
+================================================
 
 Step 9 - Open CloudForge in your browser
 Open in browser:  Customer application: http://localhost:3000
@@ -335,13 +335,13 @@ Open in browser:  Customer application: http://localhost:3000
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b0946b4d-a8eb-415a-ba05-f8c68e8733cd" />
 
 
--------------------------------------- 
+--------------------------------------
 
 Open in browser: Admin dashboard : http://localhost:3001
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" /> 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2f1fe73d-aa48-4d4b-93a1-f4cb4ea8168f" />
 
--------------------------------------------- 
+--------------------------------------------
 
 Step 10 - Test the products API
 
@@ -349,9 +349,9 @@ Run:
 Invoke-RestMethod http://localhost:5000/api/products
 
 
-<img width="915" height="109" alt="image" src="https://github.com/user-attachments/assets/40d43617-555d-4b82-8ee8-22f15b62a764" /> 
+<img width="915" height="109" alt="image" src="https://github.com/user-attachments/assets/40d43617-555d-4b82-8ee8-22f15b62a764" />
 
-========================================== 
+==========================================
 
 
 What we have verified
@@ -381,61 +381,61 @@ This is the application structure we implemented using Docker Compose.
 <img width="1184" height="1520" alt="mermaid-diagram (1)" src="https://github.com/user-attachments/assets/12b7e8ef-20af-452d-bf15-19a42ce1a858" />
 
 
-================================================================ 
-  
+================================================================
+
 This local architecture is already working:
 - Customer frontend: http://localhost:3000
 - Admin dashboard: http://localhost:3001
 - Backend API: http://localhost:5000
 - MongoDB: Docker internal network, port 27017
 
-================================================================ 
+================================================================
 
-Step 3 - Prepare the GitHub update 
+Step 3 - Prepare the GitHub update
 
-Step 3.1 — Check the current GitHub and project state  
+Step 3.1 â€” Check the current GitHub and project state
 
 Run:
 git status
 git log -1 --oneline
 git remote -v
 
-Step 3.2 — Inspect the application build scripts
+Step 3.2 â€” Inspect the application build scripts
 Run:
 Get-Content .\backend\package.json
 Get-Content .\frontend\package.json
 Get-Content .\admin\package.json
 docker ps -a --filter "name=jenkins"
 
-Step 3.3 — Check Docker access for Jenkins
+Step 3.3 â€” Check Docker access for Jenkins
 Run:
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock docker:cli docker version 
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock docker:cli docker version
 
 <img width="874" height="474" alt="image" src="https://github.com/user-attachments/assets/ecfafaa7-c273-4446-b6a4-a40d6378c688" />
 
 
-Step 3.4 — Verify package lock files
+Step 3.4 â€” Verify package lock files
 Run:
 Test-Path .\backend\package-lock.json
 Test-Path .\frontend\package-lock.json
-Test-Path .\admin\package-lock.json   
+Test-Path .\admin\package-lock.json
 
 <img width="702" height="127" alt="image" src="https://github.com/user-attachments/assets/5feb8b12-89d6-4b1b-8523-211de4035e2d" />
 
 
-Step 3.5 — Create the Jenkins pipeline
+Step 3.5 â€” Create the Jenkins pipeline
 
 First, check your repository structure
 Run:
-Get-ChildItem -Force 
+Get-ChildItem -Force
 
-Step 3.5 — Two remaining checks
+Step 3.5 â€” Two remaining checks
 1. Inspect Docker Compose:
 Get-Content .\docker-compose.yml
 2. Check Git ignore configuration
 Test-Path .\.gitignore
 
-Step 3.6 — Create Jenkins configuration files
+Step 3.6 â€” Create Jenkins configuration files
 
 1. Create the Jenkins folder
 Run:
@@ -454,9 +454,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 USER jenkins
-'@ | Set-Content .\jenkins\Dockerfile 
+'@ | Set-Content .\jenkins\Dockerfile
 
--------------------------------------------------------- 
+--------------------------------------------------------
 
 3. Create the Jenkins Compose file
 Run:
@@ -480,14 +480,14 @@ services:
 volumes:
   jenkins_home:
 '@ | Set-Content .\jenkins\docker-compose.yml
----------------------------------------------------- 
+----------------------------------------------------
 
 Notes:
 group_add: "0" allows the Jenkins process to access a Docker socket owned by the root group on typical Docker Desktop Linux containers. We'll verify this rather than assume it works.
 
 Security note: Docker socket access gives Jenkins powerful control over your Docker environment. This configuration is for your local learning setup, not a hardened production Jenkins server.
 
---------------------------------------------------------- 
+---------------------------------------------------------
 
 4. Create the Jenkinsfile
 Run:
@@ -537,12 +537,12 @@ pipeline {
 }
 '@ | Set-Content .\Jenkinsfile
 
-------------------------------------------- 
+-------------------------------------------
 
 Notes:
 The Docker builds also execute the application dependency installation and React production builds defined in your Dockerfiles.
 
------------------------------------ 
+-----------------------------------
 
 5. Create a .gitignore
 Run:
@@ -570,9 +570,9 @@ jenkins_home/
 .DS_Store
 Thumbs.db
 .vscode/
-'@ | Set-Content .\.gitignore 
+'@ | Set-Content .\.gitignore
 
----------------------------------------------  
+---------------------------------------------
 
 6. Verify the new files
 Run:
@@ -581,7 +581,7 @@ Get-Content .\Jenkinsfile
 Get-Content .\.gitignore
 git status
 
----------------------- 
+----------------------
 
 File description:
 
@@ -591,9 +591,9 @@ jenkins/docker-compose.yml	   Runs Jenkins separately from CloudForge
 Jenkinsfile	                  Defines the CI pipeline
 .gitignore	                  Excludes local dependencies, secrets and generated files
 
--------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------
 
-Step 3.7 — Validate Jenkins configuration
+Step 3.7 â€” Validate Jenkins configuration
 
 Run:
 docker compose -f .\jenkins\docker-compose.yml config
@@ -602,7 +602,7 @@ Then check whether port 8080 is already occupied:
 Run:
 Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue
 
-Step 3.7A — Correct the Dockerfile path
+Step 3.7A â€” Correct the Dockerfile path
 
 Because the build context is already the jenkins folder, Docker will look for jenkins/Dockerfile inside that folder, which is incorrect. We should correct this before building.
 
@@ -610,13 +610,13 @@ Run this PowerShell command:
 (Get-Content .\jenkins\docker-compose.yml) -replace 'dockerfile: jenkins/Dockerfile', 'dockerfile: Dockerfile' | Set-Content .\jenkins\docker-compose.yml
 
 Run:
-docker compose -f .\jenkins\docker-compose.yml config 
+docker compose -f .\jenkins\docker-compose.yml config
 
-Step 3.7B — Check port 8080
+Step 3.7B â€” Check port 8080
 Run:
 Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue
 
-Step 3.7C — Change the Jenkins port
+Step 3.7C â€” Change the Jenkins port
 Run:
 (Get-Content .\jenkins\docker-compose.yml) -replace '"8080:8080"', '"8081:8080"' | Set-Content .\jenkins\docker-compose.yml
 
@@ -624,22 +624,22 @@ Validate the configuration:
 Run:
 docker compose -f .\jenkins\docker-compose.yml config
 
-Step 3.8 — Build the Jenkins image
+Step 3.8 â€” Build the Jenkins image
 Once the configuration is correct, run:
-docker compose -f .\jenkins\docker-compose.yml build 
+docker compose -f .\jenkins\docker-compose.yml build
 
-Step 3.9 — Start Jenkins
+Step 3.9 â€” Start Jenkins
 Run:
 docker compose -f .\jenkins\docker-compose.yml up -d
 
 Then check its status:
-docker ps --filter "name=cloudforge-jenkins" 
+docker ps --filter "name=cloudforge-jenkins"
 
-Step 3.10 — Check Jenkins startup logs
+Step 3.10 â€” Check Jenkins startup logs
 Run:
-docker logs cloudforge-jenkins --tail 50 
+docker logs cloudforge-jenkins --tail 50
 
---------------------------- 
+---------------------------
 
 logs confirm:
 - Jenkins version: 2.580.2
@@ -654,12 +654,12 @@ logs confirm:
 1. Open Jenkins
 Open this URL in your browser:
 
-http://localhost:8081 
+http://localhost:8081
 
 2. Enter the initial administrator password
 Your startup log displayed the initial password. For security, retrieve it directly from the container rather than copying it from the chat:
 
-Copy the result and paste it into the Jenkins browser page. 
+Copy the result and paste it into the Jenkins browser page.
 
 Run:
 docker exec cloudforge-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
@@ -667,16 +667,16 @@ docker exec cloudforge-jenkins cat /var/jenkins_home/secrets/initialAdminPasswor
 
 
 
-<img width="1258" height="645" alt="image" src="https://github.com/user-attachments/assets/9b0bf488-ee9a-4eeb-94b9-a6db86734d4b" /> 
+<img width="1258" height="645" alt="image" src="https://github.com/user-attachments/assets/9b0bf488-ee9a-4eeb-94b9-a6db86734d4b" />
 
-------------------------- 
+-------------------------
 
 3. Install plugins
 Select:
 
 Install suggested plugins
 
-Wait until the installation finishes. 
+Wait until the installation finishes.
 
 <img width="580" height="348" alt="image" src="https://github.com/user-attachments/assets/4de28811-2a8b-4678-a791-8a499718f0fe" />
 
@@ -694,15 +694,15 @@ Save and continue.
 5. Confirm Jenkins is accessible
 You should eventually see the Jenkins dashboard.
 
-<img width="711" height="480" alt="image" src="https://github.com/user-attachments/assets/574f5cd2-15e6-421a-af3a-5267649819a6" /> 
+<img width="711" height="480" alt="image" src="https://github.com/user-attachments/assets/574f5cd2-15e6-421a-af3a-5267649819a6" />
 
 
 <img width="1273" height="571" alt="image" src="https://github.com/user-attachments/assets/ca194b57-88df-4b4d-a9da-83906660a615" />
 
---------------------------- 
+---------------------------
 
 Next, we'll create a Pipeline job connected to the GitHub repository.
-Step 3.11 — Create the CloudForge CI job
+Step 3.11 â€” Create the CloudForge CI job
 
 1. Create a new Jenkins job
 On the dashboard:
@@ -727,7 +727,7 @@ Leave Credentials empty if the GitHub repository is public.
 
 
 
-<img width="1246" height="549" alt="image" src="https://github.com/user-attachments/assets/37de129a-17e5-448d-b9ff-2a20c539b90f" /> 
+<img width="1246" height="549" alt="image" src="https://github.com/user-attachments/assets/37de129a-17e5-448d-b9ff-2a20c539b90f" />
 
 
 
@@ -740,17 +740,17 @@ Then:
 3. Wait for Build History to show a build.
 4. Open the build number and select Console Output.
 
-Step 3.12 — Check whether Jenkinsfile is on GitHub
+Step 3.12 â€” Check whether Jenkinsfile is on GitHub
 
-Step 3.13 — Commit Jenkins files to GitHub
+Step 3.13 â€” Commit Jenkins files to GitHub
 
-Step 3.14 — Fetch the latest GitHub changes
+Step 3.14 â€” Fetch the latest GitHub changes
 Run:
 git fetch origin
 
-Step 3.14A — Inspect the GitHub README update
+Step 3.14A â€” Inspect the GitHub README update
 
-### Step 3.15 — Fix Docker CLI availability in Jenkins
+### Step 3.15 â€” Fix Docker CLI availability in Jenkins
 
 The first Jenkins pipeline execution failed because the Docker CLI was unavailable inside the Jenkins container.
 
@@ -780,7 +780,7 @@ Verified Docker connectivity from inside Jenkins:
 - Docker Desktop Engine: 29.6.1
 - Docker client and server communication successful.
 
-### Step 3.16 — Successful Jenkins CI pipeline
+### Step 3.16 â€” Successful Jenkins CI pipeline
 
 Executed `CloudForge-CI` Build #3 successfully.
 
@@ -797,7 +797,7 @@ Final pipeline output:
 
 `Finished: SUCCESS`
 
-### Step 3.17 — Verify Docker images
+### Step 3.17 â€” Verify Docker images
 
 Verified that all three CI images were created locally:
 
@@ -811,95 +811,374 @@ All three image builds completed successfully.
 
 **Next phase:** Integrate AWS Elastic Container Registry (ECR) to publish the images.
 
+---------------------------------
+
+We've established:
+1. Dockerized MERN application with four healthy services.
+2. Jenkins running in Docker.
+3. Jenkins CI pipeline successfully building all three application images.
+4. GitHub integration and synchronization.
+===================================================
+
+Sprint 2 â€” AWS Infrastructure Provisioning using Terraform for CloudForge.
+
+1. Check Terraform
+terraform --version
+
+2. Check AWS CLI
+aws --version
+
+
+3. Check Git
+git --version
+
+
+4. Check your project directory
+Get-ChildItem
+
+-----------------------
+
+The development environment is ready for Sprint 2. Prerequisites verified
+
+Tool	                     Installed version      	Status
+Terraform	                  1.16.3	            Ready
+AWS CLI	                     2.35.4	            Ready
+Git                        	2.53.0	            Ready
+
+======================================
+
+Step 2 â€” Check whether you have AWS account access
+---------------------
+
+Step 3 â€” Create an IAM user for Terraform
+We'll create a dedicated IAM identity for this learning project.
+3.1 Open AWS IAM
+1. Sign in to the AWS Management Console.
+2. Search for IAM in the top search bar.
+3. Open IAM (Identity and Access Management).
+4. In the left navigation, select Users.
+5. Click Create user.
+6. 3.2 Enter the username
+   cloudforge-terraform
+You do not need to enable AWS Management Console access for this user.
+Click Next.
+
+
+Step 3.1 â€” Create an IAM group
+On your current screen:
+1. Keep Add user to group selected.
+2. Click Create group on the right.
+
+Step 3.2 â€” Name the group
+Enter:
+CloudForge-Terraform-Group
+don't attach any policies yet.
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/be9be193-95a0-4ef5-89be-77793f90311e" />
+
+
+Step 3.2 â€” Select the new group
+On the current page:
+1. Scroll down to the User groups (1) section.
+2. Find CloudForge-Terraform-Group.
+3. Tick the checkbox beside it.
+4. Scroll to the bottom and click Next.
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/290159f4-a9a1-4c50-a18b-56b1cd74b8bc" />
+
+Step 3.3: Check Groups
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bad7bbad-2cc5-4aff-9368-c81e650dad4a" />
+
+Step 3.4 â€” Configure permissions
+Next, click IAM user groups in the left navigation.
+1. Open CloudForge-Terraform-Group.
+2. Select its Permissions tab.
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c586ce1-3f0e-4c62-bdc3-ffb6e18dee17" />
+
+
+Step 3.5 â€” Attach an AWS managed policy
+For this learning environment, we'll temporarily use the AWS managed PowerUserAccess policy. It provides broad access to AWS services but excludes IAM administration, so it is not a least-privilege production policy. We'll replace it with a narrower custom policy as the project matures.
+1. Click Add permissions.
+2. Select Attach policies from the dropdown.
+3. Search for:
+PowerUserAccess
+4. Tick the checkbox beside the AWS-managed PowerUserAccess policy.
+5. Click Add permissions.
+
+6. We need to let AWS CLI authenticate as cloudforge-terraform.
+1. Click IAM users in the left navigation.
+2. Click cloudforge-terraform.
+3. Open the Security credentials tab.
+4. Scroll to Access keys.
+5. Click Create access key.
+6. Select Command Line Interface (CLI).
+7. Acknowledge the recommendation and continue.
+8. Create the access key.
+
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7a1038aa-fb72-4098-b4a0-c5892028787f" />
+
+AWS will display an Access key ID and Secret access key. Download the CSV or store them securely. Do not upload the CSV or share either key here.
+
+Step 5 â€” Configure AWS CLI
+Once the access key is created, return to PowerShell:
+aws configure
+
+Enter the following when prompted:
+Prompt	What to enter
+AWS Access Key ID	Your new access key ID
+AWS Secret Access Key	Your new secret access key
+Default region name	us-east-1
+Default output format	json
+
+Step 6 â€” Verify authentication
+Run:
+aws sts get-caller-identity
+
+Step 7 â€” Create the Terraform folder structure
+
+Run: New-Item -ItemType Directory -Force .\terraform
+
+Then create these files:
+Run:
+New-Item -ItemType File -Force .\terraform\main.tf
+New-Item -ItemType File -Force .\terraform\variables.tf
+New-Item -ItemType File -Force .\terraform\outputs.tf
+New-Item -ItemType File -Force .\terraform\versions.tf
+New-Item -ItemType File -Force .\terraform\.gitignore
+
+
+<img width="271" height="212" alt="image" src="https://github.com/user-attachments/assets/b32f15dd-5c66-42e2-8e02-ff1c51c6ac58" />
+
+
+Step 8 â€” Verify the files
+Run:
+Get-ChildItem .\terraform
+
+<img width="670" height="295" alt="image" src="https://github.com/user-attachments/assets/2a9c6e99-fb6f-4d70-aefa-ff10b26aebeb" />
+
+
+Step 9 â€” Configure Terraform version and AWS provider
+
+
+Step 10 â€” Configure variables
+Open:
+code .\terraform\variables.tf
+
+Step 11 â€” Configure the VPC
+Open:
+code .\terraform\main.tf
+
+Step 12 â€” Configure outputs
+Open:
+code .\terraform\outputs.tf
+
+Step 13 â€” Protect Terraform files
+Open:
+code .\terraform\.gitignore
+
+Step 14 â€” Initialize Terraform
+
+Move into the Terraform directory:
+cd .\terraform
+
+
+Run:
+terraform init
+Open versions.tf in VS Code:
+Run: code .\terraform\versions.tf
+
+--------------------------------
+
+What this does:
+- Downloads the AWS provider.
+- Initializes the Terraform working directory.
+- Prepares Terraform to communicate with AWS.
+
+-----------------------
+
+Step 15 â€” Format and validate
+After terraform init succeeds, run these commands individually:
+
+1. Format the Terraform files
+terraform fmt
+
+
+2. Validate the configuration
+terraform validate
+
+<img width="807" height="487" alt="image" src="https://github.com/user-attachments/assets/2c8f1630-0ec6-421d-a485-11871d39f578" />
+
+
+4. Check the AWS identity again
+aws sts get-caller-identity
+
+Step 18 â€” Create the execution plan
+Run this from C:\Users\sandy\CloudForge\terraform:
+terraform plan -out=cloudforge.tfplan
+
+
+<img width="719" height="290" alt="image" src="https://github.com/user-attachments/assets/f465225e-1a3f-4db7-8875-9da92b04aa02" />
+
+
+
+Step 19 â€” Review of planned AWS infrastructure
+
+<img width="715" height="319" alt="image" src="https://github.com/user-attachments/assets/2ad73461-5b74-4daa-89a4-27a748bf3ae6" />
+
+
+Step 20 â€” Apply the Terraform plan
+The plan looks correct. If you're happy to create these five resources in your AWS account, run:
+terraform apply "cloudforge.tfplan"
+
+<img width="757" height="366" alt="image" src="https://github.com/user-attachments/assets/aec99323-7858-493b-a73a-c718517f7a9e" />
+
+
+<img width="830" height="329" alt="image" src="https://github.com/user-attachments/assets/bfbc4d85-cf5b-417e-9f14-736792615271" />
+
+
+=======================================================
+
+The Terraform successfully created all five AWS resources.
+
+<img width="595" height="345" alt="image" src="https://github.com/user-attachments/assets/e62873e1-2aa9-4ef8-885c-a40596250d04" />
+
+======================================================
+
+Step 21 â€” Verify AWS resources
+
+1. Verify VPC
+2. Run: aws ec2 describe-vpcs --filters "Name=tag:Project,Values=CloudForge" --query "Vpcs[*].[VpcId,CidrBlock,State]" --output table
+
+<img width="835" height="131" alt="image" src="https://github.com/user-attachments/assets/fd2246ba-5466-4d88-ae4b-cbac4dd41e2c" />
+
+
+2. Verify subnet
+aws ec2 describe-subnets --subnet-ids subnet-0e511a9a4d6dfbb17 --output table
+
+<img width="823" height="541" alt="image" src="https://github.com/user-attachments/assets/483e6d94-3783-4c33-8af4-326334579d97" />
+
+
+Verify Internet Gateway
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdc eea57" --output table
+
+<img width="829" height="124" alt="image" src="https://github.com/user-attachments/assets/b21fc431-44d5-4437-98d9-bff8e3d7d1ab" />
+
+
+
+=======================
+
+Step 22 â€” Preserve the Terraform state
+
+Step 1 â€” Correct the Internet Gateway command
+
+Run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+
+Step 2 â€” Verify Terraform state
+Run:
+cd C:\Users\sandy\CloudForge\terraform
+terraform state list
+
+<img width="612" height="135" alt="image" src="https://github.com/user-attachments/assets/d2706592-4f98-4189-b793-bf58c3b1bafd" />
+
+
+Step 23 â€” Final Internet Gateway verification
+We still need to correct the earlier Internet Gateway lookup.
+
+Run this from PowerShell:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+
+<img width="825" height="184" alt="image" src="https://github.com/user-attachments/assets/cf1cfc8f-df64-47c6-b6d8-5ffabcc493b7" />
+
+Step 24 â€” Check the Terraform project files
+Then run:
+Get-ChildItem C:\Users\sandy\CloudForge\terraform -Force
+
+<img width="768" height="342" alt="image" src="https://github.com/user-attachments/assets/9f7942d3-c8a6-45aa-8944-88bda5c8a035" />
+
+
+Step 25 â€” One final AWS verification
+We still need the Internet Gateway verification result.
+
+Run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+
+<img width="817" height="180" alt="image" src="https://github.com/user-attachments/assets/7faf8cc0-5dba-4584-ae80-342afb0c1ba7" />
+
+
+igw-0ef2be14fb28bf45c    available
+
+
+Step 26 â€” Check Git ignore protection
+Run:
+Get-Content .\.gitignore
+
+Step 26 â€” Verify state and plan protection
+Run these commands:
+git check-ignore .\terraform.tfstate
+git check-ignore .\cloudforge.tfplan
+
+
+Step 27 â€” Check the Internet Gateway
+From your current directory, run:
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-0e63f9b6ccdceae57" --query "InternetGateways[*].[InternetGatewayId,Attachments[0].State]" --output table
+
+<img width="828" height="435" alt="image" src="https://github.com/user-attachments/assets/b0fb6f3f-61cf-4e63-bb92-60b2aa423e4b" />
+
+Step 28 â€” Check Git status before staging
+git status --short
+Get-Content .\README.md -Tail 35
+
+<img width="768" height="182" alt="image" src="https://github.com/user-attachments/assets/5d70709b-12e0-4f33-bf16-abf64f512d90" />
+
+
+<img width="762" height="554" alt="image" src="https://github.com/user-attachments/assets/a066c58f-8d6a-41ca-832e-c5542ba12b3e" />
+
+
+Step 29 â€” Check exactly which Terraform files Git will include
+Run:
+git status --short --untracked-files=all
+
+
 ---
 
-# Sprint 2 – AWS Infrastructure Provisioning using Terraform
+## Sprint 2 â€“ Final Verified AWS Infrastructure Results
 
-## Objective
+The CloudForge AWS networking foundation was successfully provisioned using Terraform in `us-east-1` (N. Virginia).
 
-Provision the AWS networking foundation for CloudForge using Terraform (Infrastructure as Code).
+### Provisioned resources
 
-## 1. Environment
-
-| Tool | Version |
+| Resource | AWS ID / Configuration |
 |---|---|
-| Terraform | 1.16.3 |
-| AWS CLI | 2.35.4 |
-| AWS Provider | 6.72.0 |
-| Git | 2.53.0 |
-
-**AWS Region:** us-east-1 (N. Virginia)
-
-## 2. Terraform project structure
-
-```text
-terraform/
-├── .gitignore
-├── .terraform.lock.hcl
-├── main.tf
-├── outputs.tf
-├── variables.tf
-└── versions.tf
-```
-
-## 3. AWS infrastructure provisioned
-
-| Resource | Configuration / ID |
-|---|---|
-| VPC | 10.0.0.0/16 |
-| VPC ID | vpc-0e63f9b6ccdceae57 |
-| Public subnet | 10.0.1.0/24 |
-| Subnet ID | subnet-0e511a9a4d6dfbb17 |
+| VPC | vpc-0e63f9b6ccdceae57 |
+| VPC CIDR | 10.0.0.0/16 |
+| Public subnet | subnet-0e511a9a4d6dfbb17 |
+| Subnet CIDR | 10.0.1.0/24 |
 | Availability Zone | us-east-1f |
 | Internet Gateway | igw-0ef2be14fb28bf45c |
-| Public route table | rtb-04e2ba8409d56706b |
+| Route table | rtb-04e2ba8409d56706b |
 | Route table association | rtbassoc-03c16767847e4235a |
 
-Automatic public IPv4 assignment is enabled on the public subnet.
+### Verification results
 
-## 4. Terraform validation
+- Terraform formatting check: passed
+- Terraform validation: passed
+- Terraform state: five resources
+- AWS VPC state: available
+- Public subnet IP assignment: enabled
+- Internet Gateway attachment: available
 
-Successfully executed:
-
-- terraform init
-- terraform fmt
-- terraform validate
-- terraform plan
-- terraform apply
-- terraform state list
-
-Apply result:
+### Terraform apply result
 
 `Apply complete! Resources: 5 added, 0 changed, 0 destroyed.`
 
-## 5. AWS verification
+### Remaining implementation
 
-AWS CLI independently confirmed:
-
-- VPC state: available
-- Public subnet: 10.0.1.0/24
-- Public IP assignment: enabled
-- Internet Gateway attachment: available
-- Terraform state: five resources
-
-## 6. Security and Git configuration
-
-Terraform `.gitignore` excludes:
-
-- `.terraform/`
-- Terraform state files
-- Terraform plan files
-- Override files
-- Crash logs
-
-The `.terraform.lock.hcl` file is retained for provider version consistency.
-
-Terraform state and plan files are kept locally and must not be committed to GitHub.
-
-## 7. Sprint 2 milestone
-
-**Completed:** AWS VPC, public subnet, Internet Gateway, public route table and route table association.
-
-**Not yet implemented:** EC2 deployment, ECR image publishing, EKS cluster, remote Terraform state in S3, Ansible configuration and Kubernetes deployment.
-
-**Next phase:** Container image publishing and application deployment on AWS.
+EC2 deployment, ECR image publishing, EKS, remote Terraform state in S3, Ansible configuration and Kubernetes deployment remain future implementation tasks.
